@@ -1,0 +1,298 @@
+unit uStopWatch;
+
+interface
+uses
+  // if you use Delphi7, add DateUtils unit in uses clause.
+  Windows, Messages, SysUtils, Classes, ShellAPI, Forms, StdCtrls, DateUtils,
+  Dialogs, math, Registry, COSBI_Common, uWinRing0;
+
+type
+
+  EHiResNotAvailable = class( Exception );
+  TStopWatchRes = (swresHigh, swresLow, swresCPU);
+
+  // TStopWatch begins
+  TStopWatch = class( TObject )
+  private
+    fStartTick    : Int64;
+    fStopTick     : Int64;
+    fPerformanceCounterFrequency : Int64;
+    fCPUSpeed     : Extended;
+    fElapsedTime  : Extended;
+    fLapTick      : Extended;
+    fResolution   : TStopWatchRes;
+    fCalibrated   : Boolean;
+    fIsHiRes      : Boolean;
+    fOverhead     : Int64;
+    fSleepTime    : integer;
+    fMSRDriver    : TMsrDriver;
+    fMsrRegister  : T64bitRegister;
+    function GetElapsedTime: Extended;
+    function GetPerformanceCounterFrequency: Int64;
+    function GetStartTick: Int64;
+    function GetStopTick: Int64;
+    function GetResolution: TStopWatchRes;
+    procedure SetResolution(Value : TStopWatchRes);
+    procedure SetSleepTime(Value : integer);
+    procedure CalibrateTimer;
+  public
+    constructor Create; overload;
+    procedure StartTimer;
+    function  StopTimer: Extended;
+    function  SplitTime: Extended;
+    function  LapTime: Extended;
+    function  GetCPUClockspeed( ForceCalibrate : Boolean ): Extended;
+    property  ElapsedTime: Extended read GetElapsedTime;
+    property  PerformanceCounterFrequency: Int64 read GetPerformanceCounterFrequency;
+    property  Resolution: TStopWatchRes read GetResolution write SetResolution;
+    property  SleepTime: integer read fSleepTime write SetSleepTime;
+    property  StartTick: Int64 read GetStartTick;
+    property  StopTick: Int64 read GetStopTick;
+    property  MSRDriver : TMSRDriver read fMSRDriver write fMSRDriver;
+  end; // TStopWatch
+
+implementation
+
+const
+  LOW_RES_TICKS = 1000;
+
+// TStopWatch begins............................................................
+  constructor TStopWatch.Create;
+  begin
+    inherited;
+    fIsHiRes := QueryPerformanceFrequency(fPerformanceCounterFrequency);
+    fStartTick := -1;
+    fStopTick := -1;
+    fElapsedTime := -1;
+    fLapTick := -1;
+    fCalibrated := FALSE;
+    fCPUSpeed := -1;
+    SleepTime := 1000;
+  end; // constructor TStopWatch.Create
+
+  procedure TStopWatch.SetSleepTime( Value : integer );
+  begin
+    fSleepTime := Value;
+  end; // procedure SetSleepTime( Value : integer );
+
+  function TStopWatch.GetResolution: TStopWatchRes;
+  begin
+    Result := fResolution;
+  end; // function TStopWatch.GetResolution: TStopWatchRes;
+
+  procedure TStopWatch.SetResolution(Value : TStopWatchRes);
+  begin
+    if (not fIsHiRes) and (Value = swresHigh) then begin
+      raise EHiResNotAvailable.Create('High resolution timer is not available');
+    end;
+    fResolution := Value;
+    If ( fResolution = swresCPU ) and ( not fCalibrated ) then begin
+      CalibrateTimer;
+    end;
+    fStartTick := -1;
+    fStopTick := -1;
+    fElapsedTime := -1;
+    fLapTick := -1;
+  end; // procedure TStopWatch.SetResolution
+
+  procedure TStopWatch.CalibrateTimer;
+  var
+    li_dummy : double;
+    li64_StartTick    : Int64;
+    li64_StopTick     : Int64;
+    li64_TickCount    : Int64;
+    // these variables are added to save actual time
+    EncodedTime       : TDateTime;
+    EncodedTime1      : TDateTime;
+    // affinity
+    lcProcessAffinityMask : cardinal;
+    lcSystemAffinityMask : cardinal;
+    lcProgramHandle : cardinal;
+    // ============================
+//    // this function, which taken from DateUtils unit, is used to count the
+//    // difference between two DateTimes given in milliseconds unit.
+//    // if you use Delphi7 or greater, make sure to remove this function.
+//    function MilliSecondsBetween(ANow, AThen: TDateTime): Int64;
+//      function SpanOfNowAndThen(ANow, AThen: TDateTime): Double;
+//      begin
+//        if ANow < AThen then
+//          Result := AThen - ANow
+//        else
+//          Result := ANow - AThen;
+//      end;
+//
+//    begin
+//      Result := Trunc(MSecsPerDay * SpanOfNowAndThen(ANow, AThen));
+//    end;
+//    // =====================================================================
+  begin
+    // for power saving technologies we need to spin up CPU:
+    li_dummy := Fibonacci( 38 );
+    // now get cpu frequency:
+    if assigned( fMSRDriver ) then begin
+      // we prefer to use the MSR because it can be used to select the
+      // same processor for start and stop times.
+      li64_StartTick := T64bitRegister( fMSRDriver.ReadMsr( 0, 16 ) ).AsInt64;
+    end else begin
+      // set affinity does not work inside of a routine, but must be used when
+      // spawning a thread or process.  This code is a fall back.
+      li64_StartTick := Int64( GetCycleCount );
+    end; //if
+    if fIsHiRes then begin
+      QueryPerformanceCounter( fStartTick );
+    end else begin
+      fStartTick := Int64( GetTickCount );
+    end;
+    // use 'big loop' instead of 'sleep' function to prevent mobile processor
+    // from going into sleep mode operation. It doesn't seem elegant, but it works.
+    EncodedTime := Now;
+    repeat
+      // for power saving technologies we need to keep CPU spinning:
+      li_dummy := Fibonacci(36);
+      EncodedTime1 := Now;
+    until MilliSecondsBetween(EncodedTime1, EncodedTime) > (fSleepTime);
+    // ======================================================================
+    if fIsHiRes then begin
+      QueryPerformanceCounter( fStopTick );
+      fElapsedTime := ( fStopTick - fStartTick ) / fPerformanceCounterFrequency;
+    end else begin
+      fStopTick := Int64( GetTickCount );
+      fElapsedTime := ( fStopTick - fStartTick ) / LOW_RES_TICKS;
+    end;
+    if assigned( fMSRDriver ) then begin
+      li64_StopTick := T64bitRegister( fMSRDriver.ReadMsr( 0, 16 ) ).AsInt64;
+    end else begin
+      li64_StopTick := Int64( GetCycleCount );
+    end; //if
+    li64_TickCount := li64_StopTick - li64_StartTick;
+    fCPUSpeed := li64_TickCount / fElapsedTime;
+    // measure overhead:
+    if assigned( fMSRDriver ) then begin
+      li64_StartTick := T64bitRegister( fMSRDriver.ReadMsr( 0, 16 ) ).AsInt64;
+    end else begin
+      li64_StartTick := Int64( GetCycleCount );
+    end; //if
+    if assigned( fMSRDriver ) then begin
+      li64_StopTick := T64bitRegister( fMSRDriver.ReadMsr( 0, 16 ) ).AsInt64;
+    end else begin
+      li64_StopTick := Int64( GetCycleCount );
+    end; //if
+    fOverhead := li64_StopTick - li64_StartTick;
+    fCalibrated := TRUE;
+  end;
+
+  function  TStopWatch.GetCPUClockspeed( ForceCalibrate : Boolean ): Extended;
+  begin
+    if (ForceCalibrate or ( fCPUSpeed = -1) ) then CalibrateTimer;
+    result := fCPUSpeed;
+  end;
+
+  procedure TStopWatch.StartTimer;
+  begin
+    case fResolution of
+      swresCPU  : begin
+                    fStartTick := GetCycleCount;
+                  end;
+      swresHigh : begin
+                    QueryPerformanceCounter( fStartTick );
+                  end;
+      swresLow  : begin
+                    fStartTick := Int64( GetTickCount );
+                  end;
+    end; // case
+    fStopTick := -1;
+    fElapsedTime := -1;
+    fLapTick := fStartTick;
+  end; // procedure TStopWatch.StartTimer
+
+  function TStopWatch.GetPerformanceCounterFrequency: Int64;
+  begin
+    result := -1;
+    case fResolution of
+      swresCPU  : result := Round( fCPUSpeed );
+      swresHigh : result := fPerformanceCounterFrequency;
+      swresLow  : result := LOW_RES_TICKS;
+    end;
+  end; // function TStopWatch.GetFrequency
+
+  function TStopWatch.GetStartTick: Int64;
+  begin
+    GetStartTick := fStartTick;
+  end; // function TStopWatch.GetStartTick
+
+  function TStopWatch.GetStopTick: Int64;
+  begin
+    GetStopTick := fStopTick;
+  end; // function TStopWatch.GetStopTick:
+
+  function TStopWatch.StopTimer: Extended;
+  begin
+    case fResolution of
+      swresCPU  : begin
+                    fStopTick := GetCycleCount;
+                    fElapsedTime := (( fStopTick - fStartTick ) - fOverhead) / fCPUSpeed;
+                  end;
+      swresHigh : begin
+                    QueryPerformanceCounter( fStopTick );
+                    fElapsedTime := ( fStopTick - fStartTick ) / fPerformanceCounterFrequency;
+                  end;
+      swresLow  : begin
+                    fStopTick := Int64( GetTickCount );
+                    fElapsedTime := ( fStopTick - fStartTick ) / LOW_RES_TICKS;
+                  end;
+    end; // case
+    StopTimer := fElapsedTime;
+  end; // function TStopWatch.StopTimer
+
+  function TStopWatch.SplitTime: Extended;
+  var
+    li64_Split  : Int64;
+  begin
+    SplitTime := -1;
+    case fResolution of
+      swresCPU  : begin
+                    li64_Split := GetCycleCount;
+                    SplitTime := (( li64_Split - fStartTick )- fOverhead) / fCPUSpeed;
+                  end;
+      swresHigh : begin
+                    QueryPerformanceCounter( li64_Split );
+                    SplitTime := ( li64_Split - fStartTick ) / fPerformanceCounterFrequency;
+                  end;
+      swresLow  : begin
+                    li64_Split := Int64( GetTickCount );
+                    SplitTime := ( li64_Split - fStartTick ) / LOW_RES_TICKS;
+                  end;
+    end; // case
+  end; // function TStopWatch.SplitTime
+
+
+  function TStopWatch.LapTime: Extended;
+  var
+    li64_Split  : Int64;
+  begin
+    LapTime := -1;
+    case fResolution of
+      swresCPU  : begin
+                    li64_Split := GetCycleCount;
+                    LapTime := (( li64_Split - fLapTick ) - fOverhead) / fCPUSpeed;
+                  end;
+      swresHigh : begin
+                    QueryPerformanceCounter( li64_Split );
+                    LapTime := ( li64_Split - fLapTick ) / fPerformanceCounterFrequency;
+                  end;
+      swresLow  : begin
+                    li64_Split := Int64( GetTickCount );
+                    LapTime := ( li64_Split - fLapTick ) / LOW_RES_TICKS;
+                  end;
+    end; // case
+    fLapTick := li64_Split;
+  end; // function TStopWatch.LapTime
+
+  function TStopWatch.GetElapsedTime: Extended;
+  begin
+    GetElapsedTime := fElapsedTime;
+  end; // function TStopWatch.GetElapsedTime
+
+// TStopWatch ends..............................................................
+
+end.
