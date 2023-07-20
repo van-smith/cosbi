@@ -1,0 +1,7 @@
+{TODO -cstress test : 
+Initialize array with a single value.
+Copy value from the array to another array.
+Copy the value back.
+Repeat x-times.
+Check to see that the values all match the intial value.}
+ 

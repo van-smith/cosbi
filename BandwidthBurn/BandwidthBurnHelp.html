@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Van Smith">
+	<META NAME="CREATED" CONTENT="20021126;14351313">
+	<META NAME="CHANGEDBY" CONTENT="Van Smith">
+	<META NAME="CHANGED" CONTENT="20021202;18251817">
+	<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+	<STYLE>
+	<!--
+		@page { size: 21.59cm 27.94cm; margin-left: 3.18cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Albany", sans-serif; font-size: 16pt }
+		H1.cjk { font-size: 16pt }
+		H1.ctl { font-size: 16pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US">
+<H1 CLASS="western" STYLE="border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0cm; padding-bottom: 0.07cm; padding-left: 0cm; padding-right: 0cm">
+BandwidthBurn version 0.81</H1>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0.21cm; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Introduction</FONT></FONT></P>
+<P><I>BandwidthBurn</I> is an Open Source utility developed in the
+Borland Delphi 7 RAD (Rapid Application Development) programming
+environment. <I>BandwidthBurn </I>facilitates examination of the
+bandwidth performance of personal computers&rsquo; cache and memory
+subsystems. A variety of tests representative of various bandwidth
+intensive methods are selectable via drop-down combo boxes. The
+memory range to be tested can be similarly specified as well. To
+eliminate noise from operating system background tasks, the number of
+iterations per step can be chosen and the average bandwidth at each
+step will be reported.</P>
+<P STYLE="border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0cm; padding-bottom: 0.07cm; padding-left: 0cm; padding-right: 0cm">
+Data can be saved to a text file for easy importation into
+spreadsheets.&nbsp; For expediency, <I>BandwidthBurn</I>&rsquo;s
+graph can be saved directly to a bitmap file.&nbsp; The graph&rsquo;s
+background image can be changed to customize its appearance for
+publication.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0.21cm; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Commandline arguments</FONT></FONT></P>
+<P>Version 0.81 of BandwidthBurn adds the facility for commandline
+driven execution.&nbsp; Combined with a new test that verifies the
+values written to memory, BandwidthBurn can be used as part of an
+automated stress test.</P>
+<P>The following commandline switches are currently recognized:</P>
+<TABLE WIDTH=576 BORDER=1 BORDERCOLOR="#666600" CELLPADDING=4 CELLSPACING=0 FRAME=VOID RULES=COLS>
+	<COL WIDTH=127>
+	<COL WIDTH=433>
+	<TBODY>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#666600">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#ffff99"><FONT FACE="Times, serif"><FONT SIZE=3><B>Switch</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#666600">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#ffff99"><FONT FACE="Times, serif"><FONT SIZE=3><B>Meaning</B></FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>v</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				<I>Verify</I> test.&nbsp; Will graph real-time, set iterations
+				per step to 500, and MaxDatasetSize to 1024.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>s</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				<I>Simple</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>bp32</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				<I>Block Prefetch32</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>bp64</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				<I>BlockPrefetch64</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>oos</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				Object-Oriented <I>Simple</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>oobp32</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				Object-Oriented <I>Block Prefetch32</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>oobp64</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				Object-Oriented <I>Block Prefetch64</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>oobp128</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				Object-Oriented <I>Block Prefetch128</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>stl</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Run
+				Object-Oriented <I>Simple Tight Loop</I> test</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>sf</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Save
+				after last loop to default filename</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>g</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>graph
+				real-time</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>gn</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>don''t
+				graph real-time</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>m
+				<I>nnnn</I></B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Max
+				dataset of <I>nnnn</I> kB</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>i
+				<I>nnnn</I></B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I>nnnn</I>
+				iterations per step</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>ss
+				<I>nn</I></B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#ffff99">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I>nn</I>
+				kb step size</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#e6e64c">
+				<P STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>l
+				<I>n</I></B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#e6e64c">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>loop
+				<I>n</I> times</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+	</TBODY>
+	<TBODY>
+		<TR VALIGN=TOP>
+			<TD WIDTH=127 BGCOLOR="#b3b300">
+				<P STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><B>fn
+				&ldquo;<I>filename</I>&quot;</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=433 BGCOLOR="#b3b300">
+				<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Save
+				results after last loop to <I>filename</I></FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P STYLE="border: 1px solid #000000; padding: 0.05cm"><B><I>Note</I>:
+</B><SPAN STYLE="font-weight: medium"><I>when specifying multiple
+tests, only the last test will be executed.&nbsp; If l is greater
+than one, only the results for the last loop will be saved.</I></SPAN></P>
+<P STYLE="border: 1.10pt double #000000; padding: 0.07cm; page-break-before: auto; page-break-after: auto">
+<B>Example 1<BR></B>&nbsp;<BR><I>BandwidthBurn081 v sf g m 1024 i
+1000 ss 1 fn &ldquo;c:\results\bb results&rdquo;<BR><BR></I>This
+commandline will execute the Verify test (specified by <I>v</I>) and
+save the results to the file &ldquo;bb results.txt&rdquo; in the
+directory &ldquo;c:\results\&rdquo; (specified by <I>fn
+&ldquo;c:\results\bb results&rdquo;</I>).&nbsp; Progress will be
+graphed in real-time (specified by <I>g</I>).&nbsp; Datasets will be
+tested in sizes from 1kB to 1024 kB (specified by <I>m 1024</I>) with
+1 kB increments (specified by <I>ss 1</I>).&nbsp; Each dataset will
+be tested 1000 times (specified by <I>i 1000</I>).</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0.21cm; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Test Details</FONT></FONT></P>
+<P><I>BandwidthBurn</I> has a variety of different bandwidth tests in
+order to examine the impact of different bandwidth intensive methods
+across computational platforms.&nbsp; Additionally, version 0.81 of
+<I>BandwidthBurn</I> adds a verify mode for stress testing.</P>
+<P>All operations are performed on a 32-bit unsigned integer
+(cardinal) array.&nbsp; The specific tests are described below:</P>
+<TABLE WIDTH=576 BORDER=1 BORDERCOLOR="#666600" CELLPADDING=4 CELLSPACING=0 FRAME=VOID RULES=COLS>
+	<COL WIDTH=75>
+	<COL WIDTH=485>
+	<TBODY>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#666600">
+				<P ALIGN=LEFT STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#ffff99"><FONT FACE="Times, serif"><FONT SIZE=3><B>Test</B></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#666600">
+				<P ALIGN=LEFT STYLE="font-style: normal; text-decoration: none"><FONT COLOR="#ffff99"><FONT FACE="Times, serif"><FONT SIZE=3><B>Description</B></FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Simple</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>This
+				is a basic read/write test. The write test simply initializes the
+				array to a randomly produced value. The write test accumulates
+				the values of the array. Both loops are unwound 128 times.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Block
+				Prefetch32</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Identical
+				to the <I>Simple</I> test, but relocates 16 assignment statements
+				spaced at 32-byte intervals (every eighth 32-bit integer element)
+				to the beginning of each 128 unwound assignment block. This
+				technique can be helpful when used with certain processors
+				possessing 32-byte cache-lines.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Block
+				Prefetch64</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Identical
+				to <I>Block Prefetch32</I> except that only eight statements at
+				64-byte intervals are relocated. Processors with 64-byte
+				cache-lines should benefit from this.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Multiply</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Identical
+				to <I>Simple</I> test, but each assignment statement contains a
+				single 32-bit integer multiplication.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Read</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>The
+				read portion of the <I>Simple</I> test.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Write</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>The
+				write portion of the <I>Simple</I> test.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Toggle</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Toggles
+				between <I>Simple</I> and <I>Multiply</I> at each step.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>Toggle
+				5x</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Identical
+				to the <I>Toggle</I> test, but toggles only every fifth step.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Simple</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Identical
+				to the <I>Simple</I> test except that code is structured in an
+				object-oriented class. Performance can be significantly different
+				than the Simple test depending on microprocessor architecture.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Block Prefetch32</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				version of <I>BlockPrefetch32</I>.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Block Prefetch64</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				version of <I>BlockPrefetch64</I>.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Block Prefetch128</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				block prefetch routine for 128-byte cache-lines.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Read</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				version of the <I>Read</I> test.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Write</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#e6e64c">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				version of the <I>Write</I> test.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+	</TBODY>
+	<TBODY>
+		<TR VALIGN=TOP>
+			<TD WIDTH=75 BGCOLOR="#b3b300">
+				<P ALIGN=LEFT STYLE="text-decoration: none"><FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3><I><B>oo
+				Tight Loop Simple</B></I></FONT></FONT></FONT></P>
+			</TD>
+			<TD WIDTH=485 BGCOLOR="#b3b300">
+				<P ALIGN=LEFT STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+				<FONT COLOR="#000000"><FONT FACE="Times, serif"><FONT SIZE=3>Object-oriented
+				version of the <I>Simple</I> test except that the assignment
+				loops are not unwound at all.</FONT></FONT></FONT></P>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P STYLE="border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0cm; padding-bottom: 0.07cm; padding-left: 0cm; padding-right: 0cm">
+Be aware that the object-oriented tests can produce considerably
+different results than their non-OOPed counterparts depending on
+microprocessor architecture. <I>BandwidthBurn </I>can be used to
+investigate what assignment methods are ideal for the target
+platform.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0.21cm; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>The <I>BandwidthBurn</I><SPAN STYLE="font-style: normal">
+Interface</SPAN></FONT></FONT></P>
+<P><SPAN ID="Frame1" STYLE="float: left; width: 15.24cm; height: 12.02cm; border: none; padding: 0cm; background: #ffffff">
+	<P STYLE="margin-top: 0.21cm; margin-bottom: 0.21cm"><IMG SRC="BandwidthBurnHelp_html_m618c6a1a.jpg" NAME="Graphic1" ALIGN=LEFT WIDTH=100% BORDER=0><BR CLEAR=LEFT><FONT SIZE=2><I>Illustration
+	1BandwidthBurn version 0.81 interface</I></FONT></P>
+</SPAN>This section will describe the user interface elements of
+<I>BandwidthBurn</I>. 
+</P>
+<P ALIGN=LEFT STYLE="font-style: normal">Starting from the top of the
+program window, the Titlebar displays the application name and
+version as well as the clockspeed of the system being tested.</P>
+<P><B><I>If the reported clockspeed is seemingly in error then it is
+likely that the target system is using dynamic frequency transition
+technology like VIA's </I>PowerSaver,<I> AMD's</I> PowerNow!<I> or
+Intel's</I> SpeedStep. BandwidthBurn<I> uses an extremely precise
+timing routine that counts each CPU cycle and calculates elapsed time
+under the assumption that a fixed number of CPU cycles elapse each
+second. The user must ensure that the system is operating at a fixed
+frequency; otherwise, </I>BandwidthBurn <I>results will be severely
+skewed by clock transitions.</I></B></P>
+<P>The first control in the upper-left of the program window is
+labeled <B><I>Measure <U>B</U>andwidth</I></B>. Pushing the <I>Measure
+<U>B</U>andwidth</I> button will initiate the selected test under the
+selected conditions specified in the controls immediately to the
+right of this button.</P>
+<P STYLE="border: 1px solid #000000; padding: 0.05cm"><I><B>Note:</B>
+all controls having captions with an underscored letter can be
+activate through an associated keyboard shortcut. For example, the
+</I>Measure <U>B</U>andwidth<I> button can be depressed with an
+&lt;Alt&gt;+&lt;B&gt; keystroke combination.</I></P>
+<P>The <I><B>Test</B> </I>combobox facilitates selection of the
+specific test to run. Descriptions of all of the tests were given in
+the section <I>Test Details</I>.</P>
+<P><B><I>Max Dataset (kB)</I></B> sets the limit of the largest block
+of memory to test. To accurately determine bandwidth of main memory,
+the <I>Max Dataset</I> size may have to be at least two or even three
+times the size of the CPU's L2 cache. The proper <I>Max Dataset</I>
+size can be determined by examining the <I>BandwidthBurn</I> curve.
+If the bandwidth curve is in main memory and is completely level (has
+a slope of zero) at the extreme right of the graph, then increasing
+Max Dataset further will not be needed.</P>
+<P>By default, <I>BandwidthBurn</I> will measure bandwidth over
+datasets that start at one-kilobyte and increase in size by
+one-kilobyte until the size specified in <I>Max Dataset</I> is
+reached.  The increment can be set as high as ten-kilobytes in the
+<B><I>Step Size (kb)</I></B> combo box.  Increasing <I>Step Size</I>
+will speed up the test but will reduce the granularity (precision) of
+the curve.</P>
+<P>A good idea of the bandwidth performance of a computer can be
+obtained from the default settings which iterate only once over each
+dataset size.  However, <I>BandwidthBurn</I><SPAN STYLE="font-style: normal">
+is very sensitive to background processes  and low iterations will
+show &ldquo;noise&rdquo; that is often undesirable for published
+results.  Specifying &ldquo;500&rdquo; in</SPAN><I> <B>Iterations per
+Step</B></I><SPAN STYLE="font-style: normal"> will greatly smooth the
+bandwidth curve by reporting the average of bandwidth value obtained
+at each dataset size.</SPAN></P>
+<P STYLE="border: 1px solid #000000; padding: 0.05cm"><I><B>Note:</B>
+if the bandwidth curve remains noisy at 500 iterations per step then
+this indicates that a background process is running that is making
+your system unsuitable for formal benchmarks.  Close down all running
+applications and retry.  If necessary, open Task Manager and end all
+tasks and superfluous precesses.  BandwidthBurn is an excellent tool
+to quickly determine if a system is properly prepared for
+benchmarking.</I></P>
+<P STYLE="font-style: normal">If desired, <I>BandwidthBurn</I> can
+graph the bandwidth curve in real time by checking <B><I>Graph
+Real-Time</I></B>.  Due to the additional system overhead impacting
+bandwidth measurements, real-time graphing is most useful at high
+<I>Interations per Step.</I> 
+</P>
+<P STYLE="font-style: normal">Once the bandwidth curve has been
+plotted, clicking <B><I>Scale</I></B> will toggle between
+zero-to-maximum scaling and minimum-to-maximum scaling.</P>
+<P STYLE="font-style: normal">To help editors quickly publish results
+from <I>BandwidthBurn,</I> the background image can be changed by
+pushing <I><U>C</U>hange background image</I>.  Activating this
+button will open a dialog where the user can browse for the
+appropriate bitmap or jpeg background image to replace the default
+<I>Van's Hardware</I> logo.</P>
+<P STYLE="font-style: normal">Raw data can be saved to a text file
+under <B><I>Save data to</I></B>.  Clicking Save will save the data
+to the specified file, while depressing the ellipsis will open a
+&ldquo;Save As&rdquo; dialog.</P>
+<P STYLE="font-style: normal"><B><I>Save graph to</I></B> works
+similarly to <I><SPAN STYLE="font-weight: medium">Save data to</SPAN><B>
+</B></I>except the graph alone will be saved as a bitmap file.</P>
+<P STYLE="font-style: normal">When graphing real-time, the <B>progress
+bar</B> will show the percentage of the test that has completed.</P>
+<P STYLE="font-style: normal">Directly below the progress bar, the
+status bar shows the current program status, total time spent during
+the critical bandwidth tests, minimum and maximum bandwidth rates
+encountered and the current loop being executed (see section on
+commandline arguments above).</P>
+<P STYLE="font-style: normal"><BR><BR>
+</P>
+</BODY>
+</HTML>

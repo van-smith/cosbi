@@ -1,0 +1,278 @@
+unit uAppTimer;
+{
+  COSBI: Comprehensive Open Source Benchmarking Initiative
+  Copyright (c) 2004 Van Smith
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+  The current web address of the GNU General Public License is:
+  http://www.gnu.org/licenses/gpl.html
+
+  You can contact the authors of this software at:
+  cosbi@vanshardware.com
+  See www.vanshardware.com or www.cosbi.org for more contact details.
+}
+//==============================================================================
+// Unit name: uAppTimer
+// Unit description: This is the main unit to a program that will time
+//                   arbitrary command-line programs.
+// Author: Van Smith
+// Date: August 9, 2004
+// OS dependent: Yes: Windows
+// Resolution dependent: None.
+// External unit dependencies: COSBI_Common, IniFiles, uCOSBI_SystemInfo
+//==============================================================================
+// Modification History
+// ------------ -------
+// Ver  Date   Who    Description
+// ==== ====== ====== ==========================================================
+// 1.0  040809 Van     Created.
+//==============================================================================
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, IniFiles, FileCtrl, uCOSBI_SystemInfo,
+  COSBI_Common, uStopWatch;
+
+type
+  TfrmTimeApp = class(TForm)
+    comboBoxRunCommand: TComboBox;
+    BitBtnBrowseRun: TBitBtn;
+    SaveDialog1: TSaveDialog;
+    OpenDialog1: TOpenDialog;
+    BitBtnSave: TBitBtn;
+    memoResults: TMemo;
+    BitBtn1: TBitBtn;
+    cboxProcessIdleTasks: TCheckBox;
+    cboxDefrag: TCheckBox;
+    DriveComboBoxTarget: TDriveComboBox;
+    BitBtnAbout: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BitBtnAboutClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtnSaveClick(Sender: TObject);
+    procedure BitBtnBrowseRunClick(Sender: TObject);
+  private
+    { Private declarations }
+    fStopWatch : TStopWatch;
+    fSystemInfo : TSystemInfo;
+    fLastExecutedCommand : string;
+    procedure Initialize;
+    procedure ReadIniFile;
+    procedure WriteIniFile;
+    procedure ProcessIdleTasks;
+    procedure Defrag;
+    procedure RunCommand;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmTimeApp: TfrmTimeApp;
+
+implementation
+
+{$R *.dfm}
+const
+  VERSION = '0.2';
+  DEFAULT_SAVEFILE = 'AppTimerOut.txt';
+
+procedure TfrmTimeApp.FormCreate(Sender: TObject);
+begin
+  Initialize;
+  fStopWatch := TStopWatch.Create;
+  fStopWatch.Resolution := swresHigh;
+  fSystemInfo := TSystemInfo.Create( self );
+  fSystemInfo.ShowStatus := TRUE;
+  fSystemInfo.StopWatch := fStopWatch;
+  fSystemInfo.Initialize;
+  memoResults.Lines.Add( 'COSBI-Sudhian Application Launcher Version ' + Version );
+  memoResults.Lines.Add( 'Date: ' + DateTimeToStr( Now ) );
+  memoResults.Lines.Add( fSystemInfo.GetSystemSummary );
+  memoResults.Lines.Add( '' );
+  ReadIniFile;
+  memoResults.Lines.Add( 'Ready.' );
+  Caption := Caption + ', Version ' + VERSION;
+end;
+
+procedure TfrmTimeApp.Initialize;
+begin
+  memoResults.Lines.Clear;
+  cboxProcessIdleTasks.Checked := FALSE;
+  cboxDefrag.Checked := FALSE;
+end; // procedure TfrmTimeApp.Initialize;
+
+procedure TfrmTimeApp.ProcessIdleTasks;
+begin
+  memoResults.Lines.Add( 'Processing idle tasks...' );
+  application.ProcessMessages;
+  RunProcessIdleTasks;
+  memoResults.Lines.Add( 'Finished processing idle tasks.' );
+  application.ProcessMessages;
+end; // procedure TfrmOSMark.ProcessIdleTasks;
+
+procedure TfrmTimeApp.Defrag;
+var
+  i : integer;
+begin
+  memoResults.Lines.Add( 'Defragging drive: ' + DriveComboBoxTarget.Drive );
+  for i := 1 to 5 do begin
+    memoResults.Lines.Add( 'Defrag ' + intToStr( i ) + ' of 5' );
+    application.ProcessMessages;
+    RunDiskDefrag( DriveComboBoxTarget.Drive, 1 );
+  end; // for
+  memoResults.Lines.Add( 'Defrag complete.' );
+  application.ProcessMessages;
+end; // procedure TfrmOSMark.Defrag;
+
+procedure TfrmTimeApp.RunCommand;
+var
+  ldElapsedTime : double;
+  lsErrorMsg : string;
+
+  function CommandInList : Boolean;
+  var
+    i : integer;
+  begin
+    result := FALSE;
+    for i := 0 to 6 do begin
+      if fLastExecutedCommand = comboBoxRunCommand.Items.Strings[ i ] then result := TRUE;
+    end; // for
+  end; // function
+
+  procedure AddCommandToList;
+  var
+    i : integer;
+  begin
+    for i := 5 downto 0 do begin
+      comboBoxRunCommand.Items.Strings[ i + 1 ] := comboBoxRunCommand.Items.Strings[ i ];
+    end; // for
+    comboBoxRunCommand.Items.Strings[ 0 ] := fLastExecutedCommand;
+  end; // procedure
+  
+begin
+  if cboxDefrag.Checked then Defrag;
+  if cboxProcessIdleTasks.Checked then ProcessIdleTasks;
+  memoResults.Lines.Add( '' );
+  memoResults.Lines.Add( 'Trying to execute: ' );
+  memoResults.Lines.Add( '[ ' + comboBoxRunCommand.Text + ' ]' );
+  memoResults.Lines.Add( 'Start time: ' + DateTimeToStr( Now ) );
+  fStopWatch.StartTimer;
+  try
+    StartProgramWait( comboBoxRunCommand.Text, SW_NORMAL );
+    fLastExecutedCommand := comboBoxRunCommand.Text;
+    if not CommandInList then AddCommandToList;
+  except
+    ShowMessage( 'Command failed to execute.' );
+    memoResults.Lines.Add('Command failed to execute.');
+  end; // try...except
+  ldElapsedTime := fStopWatch.StopTimer;
+  memoResults.Lines.Add( 'End time: ' + DateTimeToStr( Now ) );
+  memoResults.Lines.Add( 'Elapsed time: ' + FloatToStr( ldElapsedTime ) + ' seconds.' );
+end; // procedure TfrmTimeApp.RunCommand;
+
+procedure TfrmTimeApp.ReadIniFile;
+var
+  Ini: TIniFile;
+  i : integer;
+begin
+  Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.INI' ) );
+  try
+    // read settings
+    comboBoxRunCommand.Text := Ini.ReadString('RecentCommands', 'Last', '' );
+    for i := 0 to 6 do begin
+      comboBoxRunCommand.Items.Strings[i] := Ini.ReadString('RecentCommands', IntToStr( i ), '' );
+    end;
+    cboxProcessIdleTasks.Checked := Ini.ReadBool( 'Settings', 'ProcessIdleTasks', TRUE );
+    cboxDefrag.Checked := Ini.ReadBool( 'Settings', 'Defrag', TRUE );
+    DriveComboBoxTarget.Drive := Ini.ReadString( 'Settings', 'TargetDrive', 'c' )[1];
+  finally
+    FreeAndNil( Ini );
+  end; // try..finally
+end; // procedure TfrmTimeApp.ReadIniFile;
+
+procedure TfrmTimeApp.WriteIniFile;
+var
+  Ini: TIniFile;
+  i : integer;
+begin
+  Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.INI' ) );
+  try
+    // write settings
+    if fLastExecutedCommand <> '' then Ini.WriteString( 'RecentCommands', 'Last', fLastExecutedCommand );
+    for i := 0 to 6 do begin
+      Ini.WriteString( 'RecentCommands', IntToStr( i ), comboBoxRunCommand.Items.Strings[i] );
+    end;
+    Ini.WriteBool( 'Settings', 'Defrag', cboxDefrag.Checked );
+    Ini.WriteString( 'Settings', 'TargetDrive', DriveComboBoxTarget.Drive );
+    Ini.WriteBool( 'Settings', 'ProcessIdleTasks', cboxProcessIdleTasks.Checked );
+  finally
+    FreeAndNil( Ini );
+  end; // try..finally
+end;// procedure TfrmTimeApp.WriteIniFile;
+
+procedure TfrmTimeApp.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  WriteIniFile;
+end;
+
+procedure TfrmTimeApp.BitBtnAboutClick(Sender: TObject);
+var
+  s : string;
+begin
+  s := 'COSBI: Comprehensive Open Source Benchmarking Initiative' + CR_LF
+    + 'Copyright (c) 2004 Van Smith' + CR_LF + CR_LF
+    + 'This program is free software; you can redistribute it and/or' + CR_LF
+    + 'modify it under the terms of the GNU General Public License' + CR_LF
+    + 'as published by the Free Software Foundation; either version 2' + CR_LF
+    + 'of the License, or (at your option) any later version.' + CR_LF
+    + 'This program is distributed in the hope that it will be useful,' + CR_LF
+    + 'but WITHOUT ANY WARRANTY; without even the implied warranty of' + CR_LF
+    + 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the' + CR_LF
+    + 'GNU General Public License for more details.' + CR_LF + CR_LF
+    + 'You should have received a copy of the GNU General Public License' + CR_LF
+    + 'along with this program; if not, write to the Free Software' + CR_LF
+    + 'Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.' + CR_LF + CR_LF
+    + 'The current web address of the GNU General Public License is:' + CR_LF
+    + 'http://www.gnu.org/licenses/gpl.html' + CR_LF + CR_LF
+    + 'You can contact the authors of this software at:' + CR_LF
+    + 'cosbi@vanshardware.com' + CR_LF
+    + 'See www.vanshardware.com or www.cosbi.org for more contact/project details.' + CR_LF + CR_LF
+    + 'COSBI is an organic project!  Submit your unique tests to:' + CR_LF
+    + 'cosbi@vanshardware.com';
+  ShowMessage( s );
+end;
+
+procedure TfrmTimeApp.BitBtn1Click(Sender: TObject);
+begin
+  RunCommand;
+end;
+
+procedure TfrmTimeApp.BitBtnSaveClick(Sender: TObject);
+begin
+  SaveStringListViaFileBrowser( memoResults.Lines, DEFAULT_SAVEFILE );
+end;
+
+procedure TfrmTimeApp.BitBtnBrowseRunClick(Sender: TObject);
+begin
+  if OpenDialog1.Execute then begin
+    comboBoxRunCommand.Text := OpenDialog1.FileName;
+  end;
+end;
+
+end.

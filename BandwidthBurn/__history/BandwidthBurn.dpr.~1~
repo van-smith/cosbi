@@ -1,0 +1,21 @@
+program BandwidthBurn;
+
+{%ToDo 'BandwidthBurn.todo'}
+
+uses
+  Forms,
+  frmBandwidthBurn in 'frmBandwidthBurn.pas' {frmCOSBIBandwidthBurn},
+  COSBI_Common in '..\COSBI\COSBI_Common.pas',
+  uCOSBI_SystemInfo in '..\COSBI\uCOSBI_SystemInfo.pas',
+  uBandwidthBurn in 'uBandwidthBurn.pas',
+  CosbiCpuid in '..\COSBI\CosbiCpuid.pas',
+  COSBI_Status in '..\COSBI\COSBI_Status.pas' {frmStatus};
+
+{$R *.RES}
+{$MAXSTACKSIZE 33554432}
+begin
+  Application.Initialize;
+  Application.Title := 'COSBI BandwidthBurn';
+  Application.CreateForm(TfrmCOSBIBandwidthBurn, frmCOSBIBandwidthBurn);
+  Application.Run;
+end.
