@@ -1,0 +1,311 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40"><head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>VHJ: Xbox Dissected</title>
+
+<style fprolloverstyle="">A:hover {color: #FF0000; font-family: Arial; text-decoration: none}
+</style></head>
+
+<body text="#ffffff" bgcolor="#000000" link="#00ff00" vlink="#008000" alink="#ff0000">
+
+<p align="center"><a href="http://www.vanshardware.com/index.htm">
+<img border="0" src="011116_Xbox_files/VHJ_logo_tp.gif" width="457" height="129"></a></p>
+<h3>
+<font face="Arial" color="#ffffff">
+<a href="http://www.vanshardware.com/index.htm" style="text-decoration: none;">[RETURN HOME]</a></font></h3>
+<p style="margin-top: 0pt; margin-bottom: 0pt;" align="left">
+<font face="Arial" size="6" color="#ffff00">Xbox Dissected</font></p>
+<p align="left" style="margin-top: 0pt; margin-bottom: 0pt;">
+<font color="#00ff00" face="Arial" size="2">By
+<a href="mailto:van@vanshardware.com?subject=Xbox%20Dissected">Van Smith</a></font></p>
+<p align="left" style="margin-top: 0pt; margin-bottom: 0pt;">
+<font size="2" color="#00ff00" face="Arial">Date: November 16, 2001</font></p>
+
+<p><font face="Arial, sans-serif" size="5">Yesterday, November 15, 2001, 
+Microsoft released the Xbox.</font><font face="Arial, sans-serif">&nbsp; Based 
+on an enhanced version of NVIDIA's nForce core logic product, the Xbox is two to 
+three times <a href="http://www.nvidia.com/view.asp?PAGE=xbox">more powerful</a> 
+than its nearest rival.&nbsp; This sheer processing muscle has made the Xbox one 
+of the most desired gaming consoles ever.</font></p>
+
+<div style="border-style: solid; border-width: 1px; padding: 1px 4px;">
+  <font face="Arial, sans-serif"><font color="#ff0000">UPDATE</font>:&nbsp; 
+  Please see our November 18th update on our <a href="http://www.vanshardware.com/index.htm">
+  front page</a> for more on the Xbox internals.</font></div>
+
+<p><font face="Arial, sans-serif">We were able to get our hands on an Xbox and 
+take it apart.&nbsp; This article outlines what we found.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/topdown_xbox.jpg" width="576" height="355"></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">Specifications</font></p>
+<ul>
+  <li><font face="Arial, sans-serif"><b><font size="4">Processor</font></b>:&nbsp; 
+  733 MHz Intel (see below for more details) </font></li>
+  <li><font face="Arial, sans-serif"><b><font size="4">Chipset</font></b>:&nbsp; 
+  Enhanced NVIDIA nForce derivative.&nbsp; HyperTransport connects the North 
+  Bridge (GPU) with the South Bridge (MCP) providing a massive 800 MB/s of 
+  bandwidth.&nbsp; For more on the NVIDIA chipset, please see our nForce
+  <a href="http://www.vanshardware.com/articles/2001/july/010716_Inside_nForce/010716_Inside_nForce.htm">preview</a>.</font></li>
+  <li><font face="Arial, sans-serif"><b><font size="4">Graphics processor</font></b>:&nbsp; 
+  The 233 MHz GPU [<i>ed: reduced from 250MHz -- see our November 21st news post</i>] is similar to the GeForce 3 and features a transform and 
+  lighting (T&amp;L) engine, fog, lens effects, full-scene high resolution 
+  antialiasing, four simultaneous textures per object, environmental bump 
+  mapping, reflection maps, programmable vertex and pixel shaders, real-time 
+  lighting and much more.&nbsp; With nearly 60 million transistors, the GPU is 
+  even more complex than Intel's sprawling Pentium 4 which has around 42 
+  million.&nbsp; NVIDIA claims the GPU can reach up to one-trillion operations 
+  per second.&nbsp; The GPU can has hardware accelerated DVD decoding.</font></li>
+  <li>
+<p style="font-style: normal;">
+<font face="Arial, sans-serif"><b><font size="4">Audio</font></b>:&nbsp; The MCP 
+houses easily the most sophisticated audio processor of any gaming console.&nbsp; 
+The "APU" or Audio Processing Unit can perform real-time Dolby Digital
+<span style="font-style: italic;">encoding</span>.</font></p>
+  </li>
+  <li>
+<p style="font-style: normal;">
+<font size="4" face="Arial, sans-serif" color="#ffffff"><b>Memory</b></font><font size="3" face="Arial, sans-serif" color="#ffffff">:&nbsp; 
+Two channels of 64 MB of DDR SDRAM providing an eye-popping memory bandwidth of 
+6.4 GB/s (twice the bandwidth of the PS2).&nbsp; The PS2 has only 32 MB while 
+the Game Cube has 43 MB.</font></p>
+  </li>
+  <li><font face="Arial, sans-serif"><b><font size="4">Storage</font></b>:&nbsp; 
+  DVD-ROM is the principal gaming media and the console features a 5x DVD-ROM 
+  drive.&nbsp; <b>The Xbox also has a 10 GB hard drive.</b></font></li>
+  <li>
+<p style="font-style: normal;">
+<font face="Arial, sans-serif"><b><font size="4">Ports</font></b>:&nbsp; Four 
+gaming ports (USB but with a proprietary connector).</font></p>
+
+  </li>
+  <li>
+<p style="font-style: normal;">
+<font face="Arial, sans-serif"><b><font size="4">Networking</font></b>:&nbsp; 
+Ethernet port.</font></p>
+
+  </li>
+</ul>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">Opening Xbox</font></p>
+<p><font face="Arial, sans-serif">The Microsoft Xbox is about the size of a small VCR 
+and has a good, solid feel.&nbsp; The case is attractive.&nbsp; The bundled 
+controller is considerably larger than those that come with other consoles and 
+everyone we spoke with agreed that the Xbox controller is more comfortable to 
+use than most rival products.&nbsp; </font></p>
+<p><font face="Arial, sans-serif">The Xbox controller has a relatively powerful 
+force feedback mechanism.&nbsp; Once, while taking a break from a game, a 
+controller vibrated off the table.</font></p>
+<p><font face="Arial, sans-serif">Before we give instructions on how to
+open the Xbox, understand that disassembling your console will void
+your warranty and expose the delicate internal components of your
+system to potential damage.&nbsp;
+<i>VHJ</i> recommends strongly against opening your Xbox and cannot be 
+held responsible for any damages that may occur if you stubbornly choose to do 
+so anyway.</font></p>
+<p><font face="Arial, sans-serif">The first step to taking apart the Xbox is 
+flipping it over and peeling off the rubber feet to expose the torque screw holes.&nbsp; 
+Yes, nearly all of the screws used in the Xbox are the dreaded torque screws, so 
+you'll need an appropriate set of drivers.&nbsp; The mounting holes are 
+illustrated below.</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/ScrewHoles.jpg" width="520" height="390"></p>
+<p><font face="Arial, sans-serif">In addition to the mounting holes under the 
+rubber feet, Microsoft hid two other holes under tamper-proof stickers as shown 
+above.</font></p>
+<p><font face="Arial, sans-serif">After extracting the torque screws, flip over 
+the console and carefully remove the top cover.&nbsp; The insides of the Xbox 
+are 
+robustly shielded with sharp metal so it is possible to cut yourself if you are 
+not careful.</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/TopCover_Screws.jpg" width="469" height="408"></p>
+<p><font face="Arial, sans-serif">You can see the giant torque screws 
+immediately below the cover.</font></p>
+<p><font face="Arial, sans-serif">We were simultaneously struck with both how 
+full the Xbox was and how much it looked like a PC.&nbsp; Here is a picture of 
+the Xbox with the top cover removed.</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/InsideXbox.jpg" width="533" height="427"></p>
+<p><font face="Arial, sans-serif">It is hard to see from this picture, but both 
+the hard drive and the 5X DVD-ROM drive share the same IDE channel. </font></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">The Drives</font></p>
+<p><font face="Arial, sans-serif">At first glance, the drives inside the Xbox 
+look like normal PC components but there are subtle differences.&nbsp; The 5X 
+DVD-ROM drive has a proprietary connector that bundles power [<i>ed: typo, not 
+data</i>] and audio out 
+into a single cable.</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/DVD_Connect.jpg" width="480" height="205"></p>
+<p><font face="Arial, sans-serif">From all appearances, the hard drive is a 
+standard Seagate model, but read on...</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/hd2.jpg" width="381" height="459"></p>
+<p>&nbsp;</p>
+<p><font face="Arial, sans-serif">We pulled out the drive and connected it to a 
+PC to attempt to read its contents.&nbsp; Win98 saw the drive, but reported that 
+it was not partitioned.&nbsp; Win2k could see the drive in Device Manager, but 
+could not see it in Drive Manager so the drive could not be mounted.&nbsp; Linux 
+would either lock-up or report an error when attempting to read the partition 
+table.</font></p>
+<p><font face="Arial, sans-serif">Our experience suggests that Microsoft is 
+using a standard IDE drive, but that it is has  proprietary flash ROM firmware that 
+sends back erroneous data when the partition table is scanned. </font></p>
+<p><font face="Arial, sans-serif">Although the Xbox's hard drive was expected to 
+be 8GB, Win2k reported it as 10GB in size (the Xbox's OS does not reveal the amount 
+of space on the drive).&nbsp; The drive also appears to be ATA100 compliant 
+although it will not operate as such since it shares a 40-wire cable with the 
+DVD-ROM drive.</font></p>
+<p><font face="Arial, sans-serif">Interestingly, the Seagate hard drive is set 
+up as "Cable Select" instead of "Master" on the IDE channel it 
+cohabits with the 
+DVD-ROM drive.</font></p>
+
+<p><font face="Arial, sans-serif">We tried to upgrade the hard drive, but the 
+Xbox gagged on it, telling us that our console needed service.&nbsp; Considering 
+that the bundled drive appears to have proprietary firmware, it may not be 
+possible for end user hard drive upgrades that use conventional PC hard drives.</font></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">The Guts</font></p>
+<p><font face="Arial, sans-serif">After removing both drives along with their 
+rigid plastic mounting frames, we could see the motherboard and power supply.&nbsp; 
+In the photo below, the large passive heat sink covers the Intel processor.&nbsp; 
+The smaller heat sink and fan cool the nVidia GPU.&nbsp; The IDE cable 
+connecting the drives is attached to the lone IDE connector.&nbsp; The 
+motherboard itself is very small -- about seven or eight inches square.&nbsp; </font></p>
+
+<p><font face="Arial, sans-serif">The power supply does not have a cover of its 
+own so it is important to make sure the power cord is not connected.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/xboxguts.jpg" width="640" height="480"></p>
+
+<p><font face="Arial, sans-serif">We thought it was interesting that the word 
+"Microsoft" was silk-screened on the motherboard.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/Microsoft.jpg" width="301" height="304"></p>
+
+<p><font face="Arial, sans-serif">What makes the Xbox special is the nVidia 
+chipset.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/Chipset.jpg" width="443" height="450"></p>
+
+<p><font face="Arial, sans-serif">If you look closely in the photo above, you 
+can see the 800 MB/s HyperTransport traces connecting the GPU (under the heat 
+sink) and the MCP (the small chip in the lower left bearing nVidia's logo).</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/ExtraMemory.jpg" width="339" height="375"><br>
+<i>Reverse side of two more memory chips. [ed: updated -- see 11/18/2001
+<a href="http://www.vanshardware.com/index.htm">front page</a>]</i></p>
+
+<div style="border-style: solid; border-width: 1px; padding: 1px 4px;">
+  <font face="Arial, sans-serif" color="#ff0000">UPDAT</font><font face="Arial, sans-serif"><font color="#ff0000">E</font>:&nbsp; 
+  The silkscreening on the memory was very light and difficult to read.&nbsp; 
+  Although Micron had been publicly tapped as a source for Xbox memory, we 
+  reexamined the chips in our Xbox carefully and the memory it contained is 
+  actually from Samsung.&nbsp; The chips have the markings "Samsung 136, 
+  K4D263238M-QC50"</font></div>
+
+<p><font face="Arial, sans-serif">Looking at the 64 MB of Samsung [<i>ed: not 
+Micron</i>] DDR SDRAM (composed of four chips -- two on each channel and two on 
+each side of the motherboard), we initially thought there were unpopulated pads for doubling the Xbox's memory, 
+but there are actually two more chips on the reverse side of the motherboard </font>
+<i><font face="Arial, sans-serif">[ed: updated -- see 11/18/2001
+<a href="http://www.vanshardware.com/index.htm">front page</a>]</font></i><font face="Arial, sans-serif">.</font></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">The CPU</font></p>
+<p><font face="Arial, sans-serif">The large, passive CPU heat sink ventilated 
+directly by the system fan is easy to remove by flipping the tension lever and 
+stretching the base free from the mount.&nbsp; In the picture below, you can see 
+the CPU and GPU located very close together.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/NB_CPU.jpg" width="502" height="328"></p>
+
+<p><font face="Arial, sans-serif">For many months, the official data on the Xbox 
+website only stated that its CPU would be a 733 MHz Intel part.&nbsp; As we can 
+see in the photo below, it appears that the CPU is simply a 733 MHz BGA Mobile 
+Celeron mounted directly to the motherboard.</font></p>
+
+<p align="center"><img border="0" src="011116_Xbox_files/CPU.jpg" width="302" height="268"></p>
+
+<p><font face="Arial, sans-serif">Although the chip is outwardly a 0.18 micron 
+Coppermine Mobile Celeron, it is unclear what FSB (Front-Side Bus: the chip 
+talks to the outside world through this) speed the chip operates at.&nbsp; We 
+had been told informally by Intel months ago that the FSB speed would be 133 MHz 
+-- which would make this chip a mutant Celeron.&nbsp; Since 733 MHz&nbsp; a 
+multiple of 133 MHz, the clock speed suggests that the part might be running at 
+133 MHz (although 66 MHz is a possibility, we doubt that Microsoft would have 
+accepted such a severe and artificial limitation that would greatly undermine 
+gaming performance -- especially considering that the much more powerful AMD 
+Duron with a 200 MHz FSB was passed over at the last moment for this chip).</font></p>
+
+<p><font face="Arial, sans-serif">A very interesting CPU to consider for game 
+consoles is the soon-to-be-released
+<a href="http://www.vanshardware.com/news/2001/october/011016_VIA_MPF/011016_VIA_MPF.htm">VIA 
+C5X</a>.&nbsp; Not only does this chip consume little power making cooling 
+solutions cheap and compact, but its two double-pumped SSE units will likely 
+make it a very strong gaming chip.&nbsp; The FPU has also been completely 
+redesigned greatly improving upon the C3's decidedly weak floating point 
+performance.</font></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">Overclocking</font></p>
+<p><font face="Arial, sans-serif">There doesn't appear to be any way to easily 
+overclock the Xbox.&nbsp; Those few souls bound and determined to do so can find 
+one certain route by removing the clock crystal and supplying an external clock 
+signal.&nbsp; Be aware that every aspect of the machine will be sped up as well, 
+meaning that game play will also be faster -- perhaps too fast if the 
+adjustments are not made carefully.&nbsp; Also, since the entire system would be 
+overclocked, headroom is not likely to be great.</font></p>
+<p align="center"><img border="0" src="011116_Xbox_files/ClockCrystal.jpg" width="415" height="514"><br>
+<i>There's the clock crystal -- have at it.</i></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p><font face="Arial" size="5" color="#ffff00">Quick Observations</font></p>
+<p><font face="Arial, sans-serif">Having looked inside the Xbox, it is clear 
+hardware-wise that Xbox buyers are getting a lot for their money.&nbsp; The Xbox 
+is not only state-of-the-art, but it is also feature packed. </font></p>
+<p><font face="Arial, sans-serif">The Xbox gaming experience itself is 
+unmatched.&nbsp; The graphics details of offerings like "Dead or Alive 3" or 
+"Halo" exceed that of any other console.&nbsp; Gameplay is fluid and seamless 
+and matches arcade level -- if not better than most arcade machines.&nbsp; The 
+system is stable -- we have not experienced any glitches despite our 
+mistreatment of our unit.</font></p>
+<p><font face="Arial, sans-serif">It is resoundingly clear that Microsoft has 
+delivered <b>the</b> hardware.&nbsp; The Xbox can do what any other console can 
+do and then some.&nbsp; The only question that remains is the software, and from 
+what we have seen, this is not going to be an issue either.&nbsp; Not only is 
+Microsoft <b>the</b> titan of software, it also has almost limitless wealth to 
+ensure the Xbox succeeds.</font></p>
+<p><font face="Arial, sans-serif">Gaming is an increasingly lucrative business 
+that is soon to exceed motion pictures in terms of sheer dollars. The Xbox is a 
+key strategy for Microsoft to help the Redmondian giantess intrude itself into 
+the living rooms of everyone, helping Microsoft become the central hub for all 
+things digital.</font></p>
+<p><font face="Arial, sans-serif">Microsoft has great motivation to make the 
+Xbox succeed.&nbsp; The Xbox hardware is peerless.&nbsp; The fortunes behind the 
+gaming console are almost limitless.&nbsp; The games already look and play 
+great.</font></p>
+<p><font face="Arial, sans-serif">There are few sure bets in today's economy, 
+but the Xbox looks like it might be one of them.</font></p>
+
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<p align="center">
+<font face="Arial" size="2">Pssst!&nbsp; Our
+<a href="http://www.vanshardware.com/ads/advertising%20links.htm">Shopping Page</a> has been updated.</font></p>
+<p align="center"><font color="#008000" face="Times New Roman">
+<span class="home">===================================</span></font></p>
+<h3>
+<font face="Arial" color="#ffffff">
+<a href="http://www.vanshardware.com/index.htm" style="text-decoration: none;">[RETURN HOME]</a></font></h3>
+
+</body></html>
