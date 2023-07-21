@@ -1,0 +1,1185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+  
+  <title></title><meta name="CREATED" content="20041220;17052051">
+  <meta name="CHANGED" content="20041220;17072470">
+  <style>
+        <!--
+@page { size: 8.5in 11in; margin-left: 1.25in; margin-right: 1.25in; margin-top: 1in; margin-bottom: 1in }
+-->
+
+  </style></head>
+<body dir="ltr" lang="en-US">
+<p style="margin-bottom: 0in;"><font face="Times New Roman, serif"><font style="font-size: 13pt;" size="4"><b>COSBI OpenSourceMark Coding
+Documentation</b></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><font face="Times New Roman, serif"><font style="font-size: 13pt;" size="4"><b>How to Add a New
+Test</b></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><b>Note:</b><span style="">Updates to the version number should be
+coordinated with the COSBI committee.</span></font></font></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><font face="Times New Roman, serif"><font size="3"><b>Add Enumerated Type
+Values</b></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif">All quick tests must have an enumerated type
+value to programatically identify each test. This value is specified in the
+unit <i>uCOSBI_TTest</i><span style="font-style: normal;">. The enumerated
+type is named </span><i>TQTests</i><span style="font-style: normal;">.
+</span></font></font></span></span> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><span style=""><span style="font-style: normal;">Decide what you
+want to call the test using the following convention:
+</span><i>qtAaaaa</i><span style="font-style: normal;">. Add this new value to
+the </span></span><span style="font-style: normal;"><b>next to last</b><span style="">entry for </span></span><span style=""><i>TQTests</i><span style="font-style: normal;">.
+This will place the new value immediately before
+</span><i>qtLastTest</i><span style="font-style: normal;"> which must
+</span></span><span style="font-style: normal;"><b>always</b><span style="">be the last value. Also, </span></span><span style=""><i>qtFirstTest </i><span style="font-style: normal;">must always be the first value for
+</span><i>TQTests</i><span style="font-style: normal;">.
+</span></span></font></font></span> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal;"><font face="Times New Roman, serif"><font size="3">If the test represents a new
+test type, you will also need to modify TTestType; however, this should
+rarely be necessary since most test types have already been listed. Precede
+new test type names with the prefix “tt”.</font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal;"><font face="Times New Roman, serif"><font size="3"><b>Add a New
+Checkbox</b></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><span style="font-style: normal;">On the group
+box </span><i>gbSelectTests</i><span style="font-style: normal;"> on the form <span style="font-style: italic;">TfrmOSMarkSelectTests</span> place a
+checkbox control for the new test. &nbsp;Please observe the established naming
+convention as follows: “cbox</span><i>Aaaa</i><span style="font-style: normal;">” where </span><i>Aaaa</i><span style="font-style: normal;">is descriptive of the test. For example, the
+checkbox control for the Maze test is named </span><i>cboxMaze</i><span style="font-style: normal;">.</span></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Now append a line of code for the new checkbox
+at the end of the function</span>
+<span style="font-style: italic;">TfrmOSMarkSelectTests.GetSelectedTests:</span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;">&nbsp;&nbsp;&nbsp; <span style=""><span lang="en-US"></span></span><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#ff0000"><i>if cboxMyNewTest.Checked then fSelectedTests := fSelectedTests + [qtMyNewTest];</i></font></font></font></span></span></p>
+
+<span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;"> </span></font></font></font></span></span><p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Next, append a line of code for the new checkbox
+at the end of the function</span>
+<span style="font-style: italic;">TfrmOSMarkSelectTests.SetSelectedTests:</span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;">&nbsp;&nbsp;&nbsp; <span style=""><span lang="en-US"></span></span><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#ff0000"><i>SetCheckBox( cboxMyNewTest, qtMyNewTest );</i></font></font></font></span></span></p>
+
+<span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;"> </span></font></font></font></span></span><p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><strong>Modify INI File
+Support</strong></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><span style="font-style: normal;">At the end of
+the "write tests" section of procedure </span><i>TOSMarkINI.ReadIni </i><span style="font-style: normal;">add a line for the new
+test:</span></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#ff0000"><span style="font-style: normal;"></span><i>&nbsp;&nbsp;&nbsp; cboxMyNewTest.Checked := Ini.ReadBool(
+'Tests', 'MyNewTest', TRUE );</i></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">And in the corresponding location in routine
+</span><i>procedure TOSMarkINI.WriteIniFile </i><span style="font-style: normal;">add: </span></font></font></font></span></span>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#ff0000"><span style="font-style: normal;"></span><i>&nbsp;&nbsp;&nbsp; Ini.WriteBool( 'Tests', 'MyNewTest',
+cboxMyNewTest.Checked );</i></font></font></font></span></span></p><p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3"><b>Modify
+OSMark Test Suite</b></font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">In the unit uOSMarkSuite</span><span style="font-style: normal;">, the procedure <span style="font-style: italic;">TOSMarkTestSuite.TestSuiteRun</span> will
+have to be edited to accommodate the new
+test.</span></font></font></font></span></span></p>
+
+<p style="margin-left: 0.79in; margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><i><span lang="en-US"><font color="#ff0000"><font size="3"><font face="Times New Roman, serif"></font></font><font size="2"><font face="Courier New">if qtAaaaa in
+fSelectedTests then begin<br>&nbsp;&nbsp;&nbsp; lTest := TAaaaa.Create;<br>
+&nbsp;&nbsp;&nbsp; try</font></font></font></span></i></span></p><p style="margin-left: 0.79in; margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><i><span lang="en-US"><font color="#ff0000"><font size="2"><font face="Courier New">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; lTest.ThreadCount := fThreadCount; // for threaded tests only<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; RunTest( lTest, aiRunCount );<br>
+&nbsp;&nbsp;&nbsp; finally<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FreeAndNil( lTest );<br>
+&nbsp;&nbsp;&nbsp; end;<br>
+end; // if qtAaaaa</font></font></font></span></i></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">If the test is to become part of the official run,
+its enumerated type value must be appended to the set type
+</span><i>OFFICIAL_RUN_TESTS </i><span style="font-style: normal;">located in
+the </span><i>uOSMarkSuite</i><span style="font-style: normal;"> unit.</span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3"><b>Writing
+the Test</b></font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">All quick tests are descendants of the base class
+</span><i>TTest</i><span style="font-style: normal;">, which contains the
+basic framework for accurately timing any code called from the procedure
+</span><i>RunTest</i><span style="font-style: normal;">. Features such as the
+status window will be inherited automatically by all of the base class's
+descendents. </span></font></font></font></span></span> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><i>TTest</i><span style="font-style: normal;">'s interface
+follows.</span></font></font></font></span></span></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">TTest = class(
+TObject )</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">private</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">protected</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fRunCount :
+integer;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTotalTime :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fMaxTime :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fMinTime :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fLastTime :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fReferenceTime :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fReferenceTime2 :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fStopWatch :
+TStopWatch;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTestName :
+string;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTestDescription :
+string;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTestVersion:
+string;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTestType :
+TTestType;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fQTestType :
+TQTests;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fTestAuthor :
+string;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">ffrmStatus :
+TfrmStatus;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fShowStatus :
+Boolean;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">fOutputForm :
+TfrmOutput;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">function
+GetAverageTime : double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">function
+GetTestName : string; Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">function
+GetTestDescription : string; Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure
+CreateStatusFull(ai_PauseMilliSec : integer);</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure
+SetRunCount( Value : integer );</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">public</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">constructor
+Create; Overload;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">function
+GetFormattedMinTime : string;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">function
+GetScore(ai_index : integer) : integer;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure Run;
+Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure Clear;
+Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure
+BeforeTest; Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure RunTest;
+Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">procedure
+AfterTest; Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property RunCount:
+integer read fRunCount write SetRunCount;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+TotalTime: double read fTotalTime;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property MaxTime:
+double read fMaxTime;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property MinTime:
+double read fMinTime;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property LastTime:
+double read fLastTime;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+StopWatch: TStopWatch read fStopWatch write
+fStopWatch;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+AverageTime : double read GetAverageTime;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property TestName
+: string read GetTestName write fTestName;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+TestDescription : string read GetTestDescription write
+fTestDescription;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+TestVersion : string read fTestVersion write
+fTestVersion;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property TestType
+: TTestType read fTestType write fTestType;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+TestAuthor : string read fTestAuthor write
+fTestAuthor;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+ShowStatus : Boolean read fShowStatus write
+fShowStatus;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property QTestType
+: TQTests read fQTestType write fQTestType;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">property
+OutputForm : TfrmOutput read fOutputForm write
+fOutputForm;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New CE"><font size="2">end; // TTest
+................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Tests that utilize the output form for graphics
+are descended from </span><i>TGraphicsTest</i><span style="font-style: normal;">which is based on </span><i>TTest</i><span style="font-style: normal;">and is contained in the unit
+</span><i>uCOSBI_TGraphicsTest</i><span style="font-style: normal;">. Its
+interface follows.</span></font></font></font></span></span></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">TGraphicsTest =
+class( TTest )</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">private</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">protected</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">fPlotStep :
+integer;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">fPaintBox32 :
+TPaintBox32;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">sx :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">sy :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">ox :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">oy :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">loop_step :
+double;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">public</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure AfterTest;
+Override;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure BeforeTest;
+Override;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure Clear;
+Override;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure Plot(x, y:
+double; PlotColor: TColor); Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure
+PlotAndBuffer(x, y: double; PlotColor: TColor;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">BufferColor:
+TColor32); Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure
+PlotScale(x_left, x_right, y_bottom, y_top : double);
+Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">procedure
+ClearOutput; Virtual;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">property PlotStep:
+integer read fPlotStep write fPlotStep;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">property PaintBox32:
+TPaintBox32 read fPaintBox32 write fPaintBox32;</font></font></font></p>
+
+<p style="margin-left: 0.17in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">end; // TGraphicsTest
+..............................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Tests that use only a small amount of code can be
+added directly to the unit </span><i>uTests</i><span style="font-style: normal;">. More complicated tests should be constructed in
+their own unit. The </span><i>uses</i><span style="font-style: normal;">section for independent files will typically
+contain the following units: </span></font></font></font></span></span> </p>
+
+<p style="margin-left: 0.79in; margin-top: 0.07in; margin-bottom: 0.07in;"><font color="#000000"><font face="Times New Roman, serif"><font size="3"><i>Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+Dialogs, ExtCtrls, StdCtrls, Grids, COSBI_Common, GR32_Blend, GR32_Image,
+GR32, ComCtrls, Gauges, uCOSBI_TTest, uCOSBI_TGraphicsTest,
+uOutput;</i></font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">For simple
+tests that are to be added to uTests, you can use the following template for
+the interface:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Class
+name: TAaaaaTest</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Author:
+Thomas Jefferson</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Date:
+January 16, 2004</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">TAaaaaTest
+= class( TTest )</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">private</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fFieldVariable1 : integer;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">protected</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+MyProcedure;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">function
+MyFunction(aiValue : integer);</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">public</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">constructor Create; Overload;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+BeforeTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+AfterTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+RunTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+TAaaaaTest...............................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Of course, not all tests will need the
+</span><i>BeforeTest </i><span style="font-style: normal;">and
+</span><i>AfterTest </i><span style="font-style: normal;">procedures, but some
+tests will require more features of </span><i>TTest </i><span style="font-style: normal;">than is listed above.
+</span></font></font></font></span></span> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;"><span style="">The complexity
+of your test is up to you, but one of the key things that must be understood
+is that </span><b>only the code that is executed in
+</b></span><b><i>RunTest</i><span style="font-style: normal;">is
+timed</span></b><span style="font-style: normal;"><span style="">. </span></span></font></font></font></span> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Use </span><i>BeforeTest</i><span style="font-style: normal;"> to instantiate objects and perform other
+housekeeping tasks that you don't want timed. Similarly, use
+</span><i>AfterTest</i><span style="font-style: normal;"> to free objects and
+do other cleanup chores that you don't want to be part of the test. Both of
+these procedures are automatically invoked in the proper order whenever the
+test is run.</span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">The </span><i>Clear</i><span style="font-style: normal;"> procedure is useful for placing all of your
+initialization code and is called automatically when your test is
+instantiated. Of course, you can also call </span><i>Clear </i><span style="font-style: normal;">later in your
+test.</span></font></font></font></span></span></p>
+
+<p style="margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="MS Sans Serif"><font style="font-size: 8pt;" size="1">=================</font></font></font></p>
+
+<p style="margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="3"><b>Adding the new test to the Result
+Viewer.</b></font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="font-style: normal;">In </span><i>procedure
+TfrmOSMResults.CreateDataset </i><span style="font-style: normal;">add the
+following code prior to the "OSMark" field
+:</span></font></font></font></span></span></p>
+
+
+
+
+
+
+
+
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#ff0000"><font face="Courier New"><font size="2">&nbsp;&nbsp;&nbsp; with
+cdsResults.FieldDefs.AddFieldDef do begin</font></font><br><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><span style="">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Name :=
+'</span><b>MyNewTest</b><span style="">';</span></font></font></span></span><br><font face="Courier New"><font size="2">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DataType :=
+ftInteger;<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Required :=
+False;<br>&nbsp;&nbsp;&nbsp; end;</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="">Of course, replace
+'</span><b>MyNewTest</b><span style="">' with the name of
+the new test.</span></font></font></font></span></span></p>
+
+
+
+
+
+
+
+
+
+<p style="margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="font-style: normal;">In procedure
+</span><i>TfrmOSMResults.AppendDatasetFromFile </i><span style="font-style: normal;">add the following code:</span></font></font></font></span></span><br><br><font color="#ff0000"><span style=""><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New">&nbsp;&nbsp;&nbsp; ReadLn( lTextFile, lsTemp
+);</font></font></span></span></span><br><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><span style="">&nbsp;&nbsp;&nbsp; cdsResults.FieldByName('</span><b>MyNewTest</b><span style="">').AsInteger := StrToInt( lsTemp
+);</span></font></font></span></span></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">This code should be placed in alphabetical order, but it must be
+added&nbsp;above:</font></font></font></p>
+
+
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">&nbsp;&nbsp;&nbsp; ReadLn( lTextFile,
+lsTemp );<br>&nbsp;&nbsp;&nbsp; cdsResults.FieldByName('OSMark').AsInteger := StrToInt( lsTemp
+);</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="font-style: normal;">Add the following code in
+procedure </span><i>TfrmOSMResults.AddNewResults</i><span style="font-style: normal;">:</span></font></font></font></span></span></p>
+
+
+
+
+
+<p style="margin-bottom: 0in;"><font color="#ff0000"><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><span style="">&nbsp;&nbsp;&nbsp; cdsResults.FieldByName('</span><b>MyNewTest</b><span style="">').AsInteger
+:=<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; round(
+AOSMarkTestResults.GetBestScore(</span><b>qtMyNewTest</b><span style="">) );</span></font></font></span></span></font></p><p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">This code should be placed in alphabetical order, but it must be
+added&nbsp;above:</font></font></font></p>
+
+
+
+
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">&nbsp;&nbsp;&nbsp; cdsResults.FieldByName('OSMark').AsInteger
+:=<br>&nbsp;&nbsp;&nbsp; round(
+AOSMarkTestResults.GetCosbiScore(FALSE) );</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="font-style: normal;">You now need to edit the
+clientdataset xml file. Using Notepad or other text editor, open
+</span><i>osmresults.xml</i><span style="font-style: normal;"> located in the
+</span><i>osmfiles</i><span style="font-style: normal;"> subdirectory.</span></font></font></font></span></span></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Locate the&nbsp;field definition that follows the new test in alphabetical order and duplicate it immediately above the original
+entry. &nbsp;For example:</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">&nbsp;&nbsp;&nbsp; &lt;FIELD
+attrname="MyOldNewTest" fieldtype="i4"/&gt;</font></font></font>&nbsp;</p><p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Change the new entry
+to reflect the new field:</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><font color="#ff0000"><span style="">&nbsp;&nbsp;&nbsp; &lt;FIELD
+attrname="</span><b>MyNewTest</b><span style="">"
+fieldtype="i4"/&gt;</span></font></font></font></span></span>&nbsp;</p><p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Save this file and
+exit the text editor.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="font-style: normal;">Right-click on cdsResults
+and choose "Load from MyBase table..." and select
+</span><i>osmresults.xml </i><span style="font-style: normal;">located in the
+</span><i>osmfiles </i><span style="font-style: normal;">subdirectory.</span></font></font></font></span></span></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Open the DBChart
+editor by double-clicking on DBChartResults.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Clone the series
+immediately above OSMark.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Rename the new series
+by clicking on the "Title" button.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Move the series into alphabetical order by clicking the up arrow
+button.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Double-click the new
+series.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Change the color and
+pattern of the new series to a unique combination.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in;"><span style="font-style: normal;"><span lang="en-US"><font size="2"><font face="Courier New"><font color="#000000"><span style="">Click on the "Data Source"
+tab and select the proper source for the "Bar" to
+</span><b>MyNewTest</b><span style="">.</span></font></font></font></span></span></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Courier New"><font size="2">Save all in Delphi
+and run OSMark. Open up the Result Viewer by clicking the Result Viewer button. </font></font></font> </p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><br><font color="#000000"><font face="Courier New"><font size="2">Since none of the
+existing result sets are valid after the addition of new tests, delete each
+row and press "Save" before closing the Result Viewer Window. Reopen the
+Result Viewer window to make sure that there are now no results in the Result
+Viewer.</font></font></font></p>
+
+
+
+<p style="margin-bottom: 0in; font-style: normal;"><br><font color="#000000"><font face="Courier New"><font size="2">Regenerate reference
+scores and save them.</font></font></font></p>
+
+<p style="margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3"><b>Tutorial 1 -- Adding a Non-Graphic Test: the MP3 Encoder
+Test</b></font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">For this
+example, we will add a quick test to time the MP3 encoding benchmark that is
+part of the popular Japanese program GoGo.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Add a new enumerated type value for the test to
+</span><i>TQTests</i><span style="font-style: normal;">in the unit
+</span><i>uCOSBI_TTest</i><span style="font-style: normal;">:</span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">TQTests =
+(qtFirstTest, qtFib, qtGrid, qtGridFP, qtNBody, qtPlotTrig,
+qtPlotTrig2,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtPlotLines, qtRandomDots, qtCircles, qtMaze, qtFern, qtRichEd,
+qtPi,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtDhrystone, qtWhetstone, qtBandwidthBP64, qtMemLatency,
+qtFernThreads,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtMazeThreads, qtOrthogonalThreads, qtIdenticalThreads,
+qtJpgDecode,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in;"><span style="font-style: normal;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="">qtImageResize, qtImageRotate,
+</span><b><u>qtMP3Encode</u></b><span style=""><span style="text-decoration: none;">,
+qtLastTest);</span></span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">Drop a
+checkbox control on the “Select Tests” groupbox of the QuickTests main form.
+Name the control “cboxMP3Encode” and change the caption to “MP3
+Encode”.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">In the unit
+</span><i>uQuickTest</i><span style="font-style: normal;">, add the code below
+to the bottom of the function
+</span><i>TfrmQuickTest.GetSelectedTests</i><span style="font-style: normal;">:</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">if
+cboxMp3Encode.Checked then result := result +
+[qtMP3Encode];</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">We have to update the test
+suite so that it will know what to do with the new test. Append the following
+code into the procedure TquickTestSuite.TestSuiteRun located in the unit
+</span><i>uTQuickTestSuite</i><span style="font-style: normal;">.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">if
+qtMp3Encode in fSelectedTests then begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">lTest :=
+TIMp3EncoderTest.Create;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">RunTest(
+lTest, aiRunCount, fFrmOutput );</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; // if
+qtMp3Encode</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;"><b>Note</b><span style="">: The
+test object is passed by reference into </span></span><span style=""><i>RunTest</i><span style="font-style: normal;">which frees the object upon
+completion.</span></span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Taking the template
+interface above, we only have to modify it very slightly and add it to the
+bottom of the interface section of </span><i>uTest</i><span style="font-style: normal;">:</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Class
+name: TMp3EncoderTest</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Author:
+Van Smith</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Date:
+January 23, 2004</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">TMp3EncoderTest = class( TTest )</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">private</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// we
+don't need any private field variables or procedures</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">protected</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+ditto</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">public</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">constructor Create; Overload;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+RunTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+TMp3EncoderTest...............................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style=""><span style="font-style: normal;">Now we've got to
+actually code the test itself. Scroll to the bottom of </span><i>uTests
+</i><span style="font-style: normal;">(but before “</span></span><span style="font-style: normal;"><b>end.</b><span style="">”!)
+and add the code below.</span></span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+TMp3EncoderTest..............................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">constructor TMp3EncoderTest.Create;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">inherited;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestName
+:= 'MP3 Encoder';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestDescription := 'Times the built-in 128kbps MP3 encoding
+benchmark that is part of GoGo encoder.';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestVersion:= '1.0';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestType
+:= ttCPU;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestAuthor := 'Van Smith';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fReferenceTime := 18;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fQTestType
+:= qtMP3Encode;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+TMp3EncoderTest.RunTest;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">const</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// assumes
+that gogo is in the same directory as the calling
+program:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">GOGO_FILE_BM_COMMAND = 'gogo.exe -test';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// run the
+GOGO</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">StartProgramWait( GOGO_FILE_BM_COMMAND, SW_SHOWDEFAULT
+);</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+procedure TMp3EncoderTest.RunTest; </font></font></font> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+TMp3EncoderTest
+ends.........................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">There are
+a few things to notice. First, all test information must be specified in the
+constructor for the test. </font></font></font> </p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">The field variable
+</span><i>fReferenceTime</i><span style="font-style: normal;">can only be
+filled out properly once the test has been run on the reference platform, but
+an initial value is necessary for the program to
+run.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">The procedure
+</span><i>StartProgramWait</i><span style="font-style: normal;">is a common
+routine declared in the unit </span><i>COSBI_Common</i><span style="font-style: normal;">. It will start a program with command line
+arguments and wait for it to
+finish.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">That's all
+there is to it! Save your changes and run the
+program.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style="text-decoration: none;"><span style="font-style: normal;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><b>Note:</b><span style="">Try to keep the
+run time for any test well under 30 seconds on the reference platform since
+we don't want an “official run” to take all
+day.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3"><b>Tutorial 2 - Creating a Test That Uses the Output Form: The JPG
+Decode Test</b></font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">Creating a
+test that utilizes the output form is easy. In this tutorial we'll create a
+valuable test that measures JPG rendering
+performance.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">JPG files
+are those ending with the “jpg” file suffix. Sometimes this suffix is spelled
+“jpeg”, but in either case the files are pronounced “J-Peg.” JPG files are
+the most common graphics file format used on the Internet. Using a “lossy”
+compression scheme, a JPG file can be much, much more compact than its BMP,
+RAW or TIFF counterparts, yet can be almost indistinguishable from the
+uncompressed image as long as the user-defined compression levels are not
+made too aggressive.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">Digital
+cameras commonly store their pictures in JPG format. While small JPGs render
+almost instantaneously, large pictures from modern multi-Megapixel digital
+cameras can take a second or two to appear. This delay can be annoying when
+browsing through a folder containing dozens of
+pictures.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">As in our first tutorial
+above, add an enumerated type value for our new test to
+</span><i>TQTTests</i><span style="font-style: normal;">in unit
+</span><i>uCOSBI_TTest</i></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">TQTests =
+(qtFirstTest, qtFib, qtGrid, qtGridFP, qtNBody, qtPlotTrig,
+qtPlotTrig2,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtPlotLines, qtRandomDots, qtCircles, qtMaze, qtFern, qtRichEd,
+qtPi,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtDhrystone, qtWhetstone, qtBandwidthBP64, qtMemLatency,
+qtFernThreads,</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in;"><span style="font-style: normal;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style=""><span style="text-decoration: none;">qtMazeThreads, qtOrthogonalThreads,
+qtIdenticalThreads, </span></span><b><u>qtJpgDecode</u></b><span style=""><span style="text-decoration: none;">,</span></span></font></font></font></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">qtLastTest);</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.07in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">We'll need to plop a
+checkbox on the “Select Tests” groupbox. Caption it “JPG Decode” and name the
+control </span><i>cboxJpgDecode</i><span style="font-style: normal;">.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">In the unit
+</span><i>uQuickTest</i><span style="font-style: normal;">, add the code below
+to the bottom of the function
+</span><i>TfrmQuickTest.GetSelectedTests</i><span style="font-style: normal;">:</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">if
+cboxJpgDecode.Checked then result := result +
+[qtJpgDecode];</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Now instruct the test suite
+what to do with this new test. Append the following code to the procedure
+</span><i>TQuickTestSuite.TestSuiteRun</i><span style="font-style: normal;">located in the unit
+</span><i>uTQuickTestSuite</i><span style="font-style: normal;">.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">if
+qtJpgDecode in fSelectedTests then begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">lTest :=
+TJpgDecodeTest.Create;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">RunTest(
+lTest, aiRunCount, fFrmOutput );</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; // if
+qtJpgDecode</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Since this program has a
+graphic component and needs to use the output form, we need to make our new
+test a descendant of </span><i>TGraphicsTest</i><span style="font-style: normal;">. Copy the following interface into the bottom of
+the interface section of </span><i>uTests</i><span style="font-style: normal;">:</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Class
+name: TJpgDecodeTest</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Author:
+Van Smith</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// Date:
+January 23, 2004</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">TJpgDecodeTest = class( TGraphicsTest )</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">private</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// we
+don't need any private field variables or procedures</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">protected</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage :
+TImage; //we will use Delphi's Image component to render the JPG
+files.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">public</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">constructor Create; Overload;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+RunTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+BeforeTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+AfterTest; Override;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+TJpgDecodeTest....................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Notice that we've got the
+</span><i>BeforeTest</i><span style="font-style: normal;">and
+</span><i>AfterTest</i><span style="font-style: normal;">prodedures declared.
+The reason for this is that we need to instantiate an image control on the
+output form and maximize it so that it will occupy the entire surface of the
+form.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">To prevent memory leaks, we
+must free the image component in </span><i>AfterTest</i><span style="font-style: normal;">.</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style=""><span style="text-decoration: none;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><span style="font-style: normal;">Here is the code that goes
+toward the bottom of the implementation section of </span><i>uTests</i><span style="font-style: normal;">:</span></font></font></font></span></span></span></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+TJpgDecodeTest...............................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">constructor TJpgDecodeTest.Create;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">inherited;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestName
+:= 'JPG Decode';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestDescription := 'Benchmarks JPG image decoding
+performance,';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestVersion:= '1.0';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestType
+:= ttCPU;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fTestAuthor := 'Van Smith';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fReferenceTime := 14.407;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fQTestType
+:= qtJpgDecode;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+constructor TJpgDecodeTest.Create;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+TJpgDecodeTest.BeforeTest;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">inherited;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+PaintBox32 does not get along with the image component, so make it
+invisible:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fPaintBox32.Visible := FALSE;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// create
+the image componest which will do the JPG decoding</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage :=
+TImage.Create(fOutputForm);</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// setting
+the parent to the output to ensure the component is
+freed</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.Parent := fOutputForm;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// bring
+the component to the front of any other controls on the
+form</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.BringToFront;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// make
+the image take over the entire form</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.Align := alClient;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// since
+images are usually stretched/compressed to fit the screen,
+when</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// users
+look at them let's set stretch to TRUE</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.Stretch := TRUE;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+procedure TJpgDecodeTest.BeforeTest</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+TJpgDecodeTest.RunTest;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">const</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// assumes
+both of the pictures are in the same folder as the calling
+program.</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">JPG_FILE1
+= 'pic1.jpg';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">JPG_FILE2
+= 'pic2.jpg';</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">var</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">i :
+integer;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">for i := 1
+to 10 do begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.Picture.LoadFromFile( JPG_FILE1 );</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// allow
+the screen to update:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">application.ProcessMessages;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fImage.Picture.LoadFromFile( JPG_FILE2 );</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// allow
+the screen to update:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">application.ProcessMessages;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+for</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+procedure TRichEditTest.RunTest;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">procedure
+TJpgDecodeTest.AfterTest;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">begin</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">inherited;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// dispose
+of the image component to prevent memory leaks</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">FreeAndNil( fImage );</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">// restore
+visibility:</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">fPaintBox32.Visible := TRUE;</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">end; //
+procedure TJpgDecodeTest.BeforeTest</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.17in; font-style: normal; text-decoration: none;"><br>
+<br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0.2in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">//
+TJpgDecodeTest
+ends..........................................................</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><font color="#000000"><font face="Times New Roman, serif"><font size="3">And just
+like that, we have a valuable new test!</font></font></font></p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-top: 0.07in; margin-bottom: 0in;"><span style="text-decoration: none;"><span style="font-style: normal;"><span lang="en-US"><font size="3"><font face="Times New Roman, serif"><font color="#000000"><b>Note:</b><span style="">Sometimes
+Delphi components behave strangely when being instantiated on the fly. When
+this happens, drop a similar component on the output form, set its properties
+identically and, most often, the problems will immediately go away. You can
+then delete the visual component and the program will continue to work
+correctly. The problem usually occurs because the unit for the target form
+does not have all of the required units in its </span><b>uses</b><span style="">section. As a last resort, place the control on
+the output form and make it invisible until it is to be used by the
+test.</span></font></font></font></span></span></span></p>
+
+<p style="margin-bottom: 0in; font-style: normal; text-decoration: none;"><br>
+</p>
+
+<p style="margin-bottom: 0in;"><br>
+</p>
+
+<p style="margin-bottom: 0in;"><br>
+</p>
+</body></html>

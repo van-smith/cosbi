@@ -1,0 +1,35 @@
+COSBI OSMark Version 1.0beta8 - Centaur internal use only
+Date: 9/15/2005 9:15:34 PM
+* CPU Name: Intel(R) Pentium(R) 4 CPU 3.40GHz (Intel P4-Northwood 3400MHz)
+* Vendor ID: GenuineIntel
+* Core ID: Family: 15, Model: 2, Stepping: 9
+* Number of CPUs (real, virtual): 1, 2
+* CPU Features: trace L1 cache, 12 K microOPs, 8 ways; L1d (kB): 8; L2 (kB): 512; FPU; CX8; APIC; CMOV; PAE; PAT; MMX; SSE; SSE2; HyperThreading
+* Windows MHz: 3400
+* COSBI CPU Clock speed is 3,400,198,652 Hz
+* CPU External Clock: 200 MHz
+* Motherboard: HP Pavilion 061, Model DQ172A-ABA M490N
+* BIOS: BIOS Date: 12/12/03 18:15:21 Ver: 08.00.09, Version: A M I  - 12000312
+* Graphics adapter: NVIDIA GeForce FX 5600
+* Graphics adapter memory: 128 MB
+* Graphics driver: 6.14.10.6177
+* Memory Amount (MB): 511
+* Hard drive model: WDC WD2500BB-00DWA0, Size: 250.1 GB
+* Screen Resolution: 1280x1024x32@60Hz
+* OS Name: Microsoft Windows XP
+* Version: 5.1
+* Build: 2600
+* Service Pack: Service Pack 2
+* Registered Owner: Gordon Schumway
+* Registered Organization: Centaur Technology
+
+Ready.
+Starting minimum power draw mobile test (press <Esc> to abort)...
+Sleeping for one minute. Iteration 1
+
+The form is being destroyed. Dumping results...
+Shutting down...  Final data:
+Total elapsed time (s): 	5.013
+Total elapsed time (m): 	0.084
+Total elapsed time (h): 	0.001
+Battery level: 	-1

@@ -1,0 +1,74 @@
+COSBI OSMark Version 1.0beta7a
+Date: 5/31/2005 7:11:00 PM
+* CPU Name: Intel(R) Pentium(R) 4 CPU 3.40GHz
+* Vendor ID: GenuineIntel
+* Core ID: Family: 15, Model: 2, Stepping: 9
+* Number of CPUs (real, virtual): 1, 2
+* CPU Features: trace L1 cache, 12 K microOPs, 8 ways; L1d (kB): 8; L2 (kB): 512; FPU; CX8; APIC; CMOV; PAE; PAT; MMX; SSE; SSE2; HyperThreading
+* Windows MHz: 3400
+* COSBI CPU Clock speed is 3,400,157,258 Hz
+* CPU External Clock: 200 MHz
+* Motherboard: HP Pavilion 061, Model DQ172A-ABA M490N
+* BIOS: BIOS Date: 12/12/03 18:15:21 Ver: 08.00.09, Name: BIOS Date: 12/12/03 18:15:21 Ver: 08.00.09, Version: A M I  - 12000312
+* Graphics adapter: NVIDIA GeForce FX 5600
+* Graphics adapter memory: 128 MB
+* Graphics driver: 6.14.10.6177
+* Memory Amount (MB): 511
+* Hard drive model: WDC WD2500BB-00DWA0, Size: 250.1 GB
+* Screen Resolution: 1600x1200x32@75Hz
+* OS Name: Microsoft Windows XP
+* Version: 5.1
+* Build: 2600
+* Service Pack: Service Pack 2
+* Registered Owner: Gordon Schumway
+* Registered Organization: Centaur Technology
+
+Ready.
+
+**********
+Max Power Battery depletion time 	0.000 minutes
+Performance score 	0.000
+Max Power Battery life score 	0.000
+OVERALL MAX POWER MOBILE SCORE 	0.000
+
+*** Test Starts (1 iteration) ***
+
+Test, Score, Time(s)
+====  =====  =======
+Grid Blast, 994, 1.880
+
+*** Test Ends ***
+
+**********
+Max Power Battery depletion time 	0.032 minutes
+Performance score 	0.000
+Max Power Battery life score 	0.350
+OVERALL MAX POWER MOBILE SCORE 	0.175
+
+*** Test Starts (1 iteration) ***
+
+Test, Score, Time(s)
+====  =====  =======
+Grid Blast: Floating Point, 986, 2.193
+
+*** Test Ends ***
+
+**********
+Max Power Battery depletion time 	0.070 minutes
+Performance score 	0.000
+Max Power Battery life score 	0.755
+OVERALL MAX POWER MOBILE SCORE 	0.378
+
+*** Test Starts (1 iteration) ***
+
+Test, Score, Time(s)
+====  =====  =======
+Fibonacci threads test, 982, 3.375
+
+*** Test Ends ***
+
+**********
+Max Power Battery depletion time 	0.127 minutes
+Performance score 	0.000
+Max Power Battery life score 	1.368
+OVERALL MAX POWER MOBILE SCORE 	0.684

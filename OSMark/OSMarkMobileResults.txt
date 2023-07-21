@@ -1,0 +1,32 @@
+COSBI OSMark Version 1.0beta8 - Centaur internal use only
+Date: 8/27/2005 12:21:29 AM
+* CPU Name: VIA Esther processor 1866MHz (VIA C7-Esther (C5J0D) 1861MHz)
+* Vendor ID: CentaurHauls
+* Core ID: Family: 6, Model: 10, Stepping: 9
+* Number of CPUs (real, virtual): 1, 1
+* CPU Features: L1i (kB): 64; L1d (kB): 64; L2 (kB): 128; FPU; CX8; APIC; CMOV; PAE; PAT; MMX; SSE; SSE2; SSE3; EnhancedSpeedStep; NX; CentaurRandomNbrGenerator supported and enabled; CentaurAdvancedCryptographyEngine supported and enabled; CentaurAdvancedCryptographyEngine2 supported and enabled; CentaurMontgomeryMultiplier supported and enabled; CentaurHashEngine supported and enabled
+* Windows MHz: 1861
+* COSBI CPU Clock speed is 1,861,370,299 Hz
+* CPU External Clock: 133 MHz
+* Motherboard: VIA Technologies, Inc., Model PN800-8237
+* BIOS: #Phoenix - AwardBIOS v6.00PG 5818Z, Name: #Phoenix - AwardBIOS v6.00PG 5818Z, Version: PM800  - 42302e31
+* Graphics adapter: RADEON 9000 SERIES
+* Graphics adapter memory: 64 MB
+* Graphics driver: 6.14.10.6553
+* Memory Amount (MB): 1022
+* Hard drive model: IC35L120AVV207-0, Size: 123.5 GB
+* Screen Resolution: 1280x1024x32@75Hz
+* OS Name: Microsoft Windows XP
+* Version: 5.1
+* Build: 2600
+* Service Pack: Service Pack 2
+* Registered Owner: Gordon Schumway
+* Registered Organization: Centaur Technology
+
+Ready.
+
+**********
+Max Power Battery depletion time 	0.666 minutes
+Performance score 	0.000
+Max Power Battery life score 	7.192
+OVERALL MAX POWER MOBILE SCORE 	3.596
