@@ -1,0 +1,13 @@
+program nBody;
+
+uses
+  Forms,
+  uNBody in 'uNBody.pas' {frmNBody};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TfrmNBody, frmNBody);
+  Application.Run;
+end.

@@ -1,0 +1,249 @@
+unit uprojectionLorentz;
+{
+  COSBI: Comprehensive Open Source Benchmarking Initiative
+  Copyright (c) 2004 Van Smith
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+  The current web address of the GNU General Public License is:
+  http://www.gnu.org/licenses/gpl.html
+
+  You can contact the authors of this software at:
+  cosbi@vanshardware.com
+  See www.vanshardware.com or www.cosbi.org for more contact details.
+}
+//==============================================================================
+// Unit name: uprojectionLorentz
+// Unit description: OpenGL Lorenz Attractor.
+// Author: Van Smith
+// Date: March 16, 2005
+// OS dependent: Yes: Windows
+// Resolution dependent: No, but resolution and color depth will impact scores.
+// External unit dependencies: GLScene, GLObjects,
+//   GLWin32Viewer, GLMisc, OpenGL1x, GLTexture, VectorGeometry, GLGraph,
+//   GLGeomObjects, ExtCtrls, StdCtrls, GLFireFX, GLCadencer;
+//==============================================================================
+// Modification History
+// ------------ -------
+// Ver  Date   Who    Description
+// ==== ====== ====== ==========================================================
+// 1.0 050316 Van     Created.
+//==============================================================================
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Controls, Forms, GLScene, GLObjects,
+  GLWin32Viewer, GLMisc, OpenGL1x, GLTexture, VectorGeometry, GLGraph,
+  GLGeomObjects, ExtCtrls, StdCtrls;
+
+type
+  TfrmLorenzAttractor = class(TForm)
+    GLScene1: TGLScene;
+    SceneViewer: TGLSceneViewer;
+    GLCamera: TGLCamera;
+    GLDummyCube: TGLDummyCube;
+    GLPlane: TGLPlane;
+    GLPoints: TGLPoints;
+    DirectOpenGL: TGLDirectOpenGL;
+    GLArrowLine1: TGLArrowLine;
+    GLLightSource1: TGLLightSource;
+    GLXYZGrid1: TGLXYZGrid;
+    Timer1: TTimer;
+    GLSphere1: TGLSphere;
+    procedure FormCreate(Sender: TObject);
+    procedure DirectOpenGLRender(Sender : TObject; var rci: TRenderContextInfo);
+    procedure SceneViewerMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure SceneViewerMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure Timer1Timer(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+    fIndex : integer;
+    fAbort : Boolean;
+    procedure BallGo;
+  public
+    { Public declarations }
+    mx, my : Integer;
+  end;
+
+var
+  frmLorenzAttractor: TfrmLorenzAttractor;
+
+implementation
+
+{$R *.dfm}
+
+const
+
+  L_STEPS = 10000;
+
+procedure TfrmLorenzAttractor.FormCreate(Sender: TObject);
+var
+   j : Integer;
+   x0, y0, z0, x1, y1, z1 : double;
+   h, a, b, c : double;
+
+begin
+  fAbort := FALSE;
+  fIndex := 0;
+   h := 0.01;
+   a := 10;
+   b := 28;
+   c := 8 / 3;
+
+   x0 := 0.1;
+   y0 := 0;
+   z0 := 0;
+
+   for j := 0 to L_STEPS do begin
+      x1 := x0 + h * a * (y0 - x0);
+      y1 := y0 + h * (x0 * (b - z0) - y0);
+      z1 := z0 + h * (x0 * y0 - c * z0);
+      x0 := x1;
+      y0 := y1;
+      z0 := z1;
+//      glColor3f( 1, 1, 0);
+      GLPoints.Positions.Add(x0, y0, z0);
+   end; // for
+     GLPoints.Visible := FALSE;
+//     BallGo;
+
+   // generate a bunch of random points
+  // for i:=1 to 100 do
+//      GLPoints.Positions.Add((Random-0.5)*5, (Random-0.5)*5, (Random-0.5)*5);
+end;
+
+procedure TfrmLorenzAttractor.DirectOpenGLRender(Sender : TObject; var rci: TRenderContextInfo);
+var
+   i : Integer;
+   mat : TMatrix;
+   p, pProj : TVector;
+   planePoint, planeNormal : TVector;
+   plane : THmgPlane;
+begin
+   // Here we recover our plane point and normal...
+   planePoint:=GLPlane.Position.AsVector;
+   planeNormal:=GLPlane.Direction.AsVector;
+   // ...which we use to create a plane (equation)
+   plane:=PlaneMake(planePoint, planeNormal);
+   // from that plane equation and our pojection direction
+   // (which is here the plane normal)
+   mat:=MakeParallelProjectionMatrix(plane, planeNormal);
+
+   // save state, turn off lighting and specify the lines color
+   glPushAttrib(GL_ENABLE_BIT);
+   glDisable(GL_LIGHTING);
+
+   // we'll be drawing a bunch of lines, to specify a line in OpenGL,
+   // you only need to specify the line start and end vertices
+   glBegin(GL_LINES);
+      for i:=0 to GLPoints.Positions.Count-2 do begin
+         glColor3f( i / L_STEPS , i /L_STEPS, 1);
+         // read the point coordinates, directly from the TGLPoints list
+         MakePoint(p, GLPoints.Positions.List[i]);
+         // project this point on the plane with the matrix
+         MakePoint(pProj, GLPoints.Positions.List[i + 1]);
+//         pProj:=VectorTransform(p, mat);
+         // specify the two vertices
+         glVertex3fv(@p);
+         glVertex3fv(@pProj);
+      end;
+   glEnd;
+
+   // restore state
+   glPopAttrib;
+end;
+
+procedure TfrmLorenzAttractor.SceneViewerMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+   mx:=x; my:=y;
+end;
+
+procedure TfrmLorenzAttractor.SceneViewerMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+   if Shift=[ssLeft] then
+      GLCamera.MoveAroundTarget(my-y, mx-x)
+   else if Shift=[ssRight] then
+      GLCamera.RotateObject(GLPlane, my-y, mx-x);
+   mx:=x; my:=y;
+end;
+
+procedure TfrmLorenzAttractor.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+   GLPlane.Position.Y:=GLPlane.Position.Y+WheelDelta*0.001;
+end;
+
+procedure TfrmLorenzAttractor.Timer1Timer(Sender: TObject);
+begin
+    timer1.Enabled := FALSE;
+    BallGo;
+
+//  GLCamera.MoveAroundTarget(0.00, 0.04);
+//  inc( fIndex );
+//  if fIndex < L_STEPS then begin
+//    GLSphere1.Position.AsAffineVector := GLPoints.Positions.List[ fIndex ];
+//  end else begin
+//    timer1.Enabled := FALSE;
+//    fIndex := 0;
+//  end;
+end;
+
+procedure TfrmLorenzAttractor.Button1Click(Sender: TObject);
+begin
+  BallGo;
+//  for i := 0 to L_STEPS do begin;
+//    GLSphere1.Position.AsAffineVector := GLPoints.Positions.List[ i ];
+//    Application.ProcessMessages;
+//  end;
+end;
+
+procedure TfrmLorenzAttractor.BallGo;
+var
+  i : integer;
+begin
+  for i := 0 to L_STEPS do begin;
+    if fAbort then begin
+      Application.Terminate;
+      Abort;
+    end;
+    GLCamera.MoveAroundTarget(0.00, 0.04);
+    inc( fIndex );
+    if fIndex < L_STEPS then begin
+      GLSphere1.Position.AsAffineVector := GLPoints.Positions.List[ i ];
+    end else begin
+//    timer1.Enabled := FALSE;
+      fIndex := 0;
+    end;
+    Application.ProcessMessages;
+  end; // for
+  Application.Terminate;
+end; // procedure TForm1.BallGo;
+procedure TfrmLorenzAttractor.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #27 then begin
+    fAbort := TRUE;
+  end;
+end;
+
+end.

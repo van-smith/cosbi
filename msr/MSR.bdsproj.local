@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2005/08/25 17:13:04.105.pas,C:\Documents and Settings\Remote\My Documents\Borland Studio Projects\Unit1.pas=C:\data\cosbi\msr\ufrmMSR.pas</Transaction>
+    <Transaction>2005/08/25 17:13:04.105.dfm,C:\Documents and Settings\Remote\My Documents\Borland Studio Projects\Unit1.dfm=C:\data\cosbi\msr\ufrmMSR.dfm</Transaction>
+    <Transaction>2005/08/28 20:13:26.578.pas,D:\data\cosbi\msr\Unit1.pas=D:\data\cosbi\msr\uMsr.pas</Transaction>
+  </Transactions>
+</BorlandProject>

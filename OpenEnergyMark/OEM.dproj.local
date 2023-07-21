@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2008/08/11 15:58:43.593.pas,C:\Users\Van\Documents\RAD Studio\Projects\Unit1.pas=C:\data\delphi2007\OpenEnergyMark\uOEM.pas</Transaction>
+    <Transaction>2008/08/11 15:58:43.593.dfm,C:\Users\Van\Documents\RAD Studio\Projects\Unit1.dfm=C:\data\delphi2007\OpenEnergyMark\uOEM.dfm</Transaction>
+    <Transaction>2008/08/11 15:58:52.540.dproj,C:\Users\Van\Documents\RAD Studio\Projects\Project1.dproj=C:\data\delphi2007\OpenEnergyMark\OEM.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

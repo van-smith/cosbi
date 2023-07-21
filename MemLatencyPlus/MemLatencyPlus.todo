@@ -1,0 +1,8 @@
+{TODO -cCombine w/ BandwidthBurn : Combine with BandwidthBurn into a single application.}
+{TODO -cAdd read test :
+Create temp variable li_dummy for left side of assignment statements.
+Eliminate one of the random number calculations.
+In the calculations, reduce the amount of memory being tested by 1/2.}
+{TODO -cAdd read test : Copy GraphMemLatency to GraphMemReadLatency}
+{TODO -cAdd write test : Add write test}
+{TODO -cAdd read test : Add read test}
