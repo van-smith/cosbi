@@ -1,0 +1,458 @@
+/***************************************************************************
+                          main.cpp  -  description
+                             -------------------
+    begin                : Mon Feb  7 11:22:44 CST 2005
+    copyright            : (C) 2005 by Van Smith
+    email                : van@vanshardware.com
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "iostream"
+#include "iomanip"  // needed for setiosflags, etc.
+#include "string"
+#include "stdio.h"
+#include "time.h"
+#include "float.h"
+#include "math.h"
+
+double intArithmetic(int);
+double doubleArithmetic(double, double);
+//double longArithmetic(long long, long long);
+double trig(double);
+double io(int);
+double FibTest(int n);
+double PiTest(int n);
+
+using namespace std;
+
+int main()
+{
+	int intMax =		1000000000; // 1B
+	double doubleMin =  10000000000.0; // 10B
+	double doubleMax =	11000000000.0; // 11B
+//	long long longMin = 10000000000; // 10B
+//	long long longMax = 11000000000; // 11B
+	double trigMax =	10000000; // 10M
+	int ioMax =			1000000; // 1M
+
+	cout << "Hello!  Starting minibench benchmark..." << endl;
+	cout  << endl
+        << "Executing Pi benchmark..."
+        << endl;       
+  double PiTestTime = PiTest( 10000 );
+
+  cout  << endl
+        << "Executing Fibonacci benchmark..."
+        << endl;       
+  double FibTestTime = FibTest( 40 );
+  
+
+  cout  << endl
+        << "Executing integer benchmark..."
+        << endl;       
+	double IntegerArithmeticTime = intArithmetic(intMax);
+
+  cout  << endl
+        << "Executing double-precision floating point benchmark..."
+        << endl;
+	double doubleArithmeticTime = doubleArithmetic(doubleMin, doubleMax);
+  
+//	long longArithmeticTime = (long)longArithmetic(longMin, longMax);
+
+  cout  << endl
+        << "Executing transcendental functions benchmark..."
+        << endl;
+	double trigTime = trig(trigMax);
+
+  cout  << endl
+        << "Executing I/O benchmark..."
+        << endl;
+  double ioTime = io(ioMax);
+  
+//	long totalTime = intArithmeticTime + doubleArithmeticTime + longArithmeticTime + trigTime + ioTime;
+
+  // report total time:
+	double totalTime = FibTestTime + IntegerArithmeticTime + doubleArithmeticTime 
+    + trigTime + ioTime + PiTestTime;
+
+  // set number formatting:
+  cout << setiosflags( ios::fixed )
+       << setprecision( 2 );
+
+  cout << "*** SUMMARY (test, test time (s)) ***" << endl;
+  cout << "=====================================" << endl;
+  cout << "Pi test \t" << PiTestTime << endl;
+  cout << "Fib test \t" << FibTestTime << endl;
+  cout << "Integer arithmetic test \t" << IntegerArithmeticTime << endl;
+  cout << "Double arithmetic test \t" << doubleArithmeticTime << endl;
+  cout << "Transcendental function test \t" << trigTime << endl;
+  cout << "I/O test \t" << ioTime << endl;
+  
+  cout  << "************************************************"
+        << endl
+        << "Total elapsed time: "
+        << totalTime
+        << " ms." << endl;
+        
+  cout  << "CLOCKS_PER_SEC: " << CLOCKS_PER_SEC << endl;
+
+	cout << endl << "Minibench benchmark completed." << endl;
+
+  remove( "DeleteMe_minibench.txt" ); 
+  cout << "Press <Enter> to terminate program." << endl;
+  cin.get();
+  return 0;
+}
+
+string ComputePi(int NumDigits)
+{
+  int I; 
+  int J; 
+  int K; 
+  int P; 
+  int Q;
+  int X;
+  int Nines;
+  int Predigit;
+  int arraySize;
+  arraySize = ( 10 * NumDigits ) / 3;
+  int * A = new int [ arraySize ];
+  int PiLength;
+  string strResult;
+  // initialize string to "-----..."
+  for ( I = 0; I <= NumDigits; I++ )
+  { 
+    strResult += "-";
+  }
+
+  PiLength = 1;
+  Nines = 0;
+  Predigit = 0;
+  // intitialize array:
+  for ( I = 0; I <= arraySize; I++ )
+    A[I] = 2; // ok
+    
+  for ( J = 0; J <= (NumDigits-1); J++ )
+  {
+    Q = 0;
+    P = 2 * arraySize - 1;
+    for ( I = (arraySize - 1); I >= 0; I-- )
+    {
+      X = ( 10*A[I] ) + ( Q*(I+1) );
+      A[I] = X % P;
+      Q = X / P;
+      P = P - 2;
+    }
+    A[0] = Q % 10;
+    Q = Q / 10;
+    if ( Q == 9 )
+    {
+      Nines++;
+    }
+    else 
+    {
+      if ( Q == 10 )
+      {
+        strResult[PiLength - 1] = char(Predigit + 1 + int('0'));
+        for ( K = 1; K <= Nines; K++ )
+          strResult[ PiLength - 1 + K ] = '0';
+        PiLength = PiLength + Nines + 1;
+        Predigit = 0;
+        Nines = 0;
+      }
+      else
+      {
+        strResult[PiLength - 1] = char(Predigit + int('0'));
+        Predigit = Q;
+        for ( K = 1; K <= Nines; K++ )
+          strResult[ PiLength - 1 + K ] = '9';
+        PiLength = PiLength + Nines + 1;
+        Nines = 0;
+      }
+    }
+  }
+  strResult[PiLength - 1] = char( Predigit + int('0') );
+
+  return strResult;
+
+  delete [] A;
+}
+
+double PiTest(int n)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime;
+	string strResult;
+	
+	startTime = clock();
+	strResult = ComputePi( n );
+	stopTime = clock();
+
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout << setiosflags( ios::fixed )
+       << setprecision( 0 );
+  cout  << "Calculate Pi elapsed time: "
+        << elapsedTime
+        << " ms with n of "
+        << n
+        << endl;
+  cout  << " strResult: "
+        << strResult
+        << endl;
+
+  return elapsedTime;
+}
+
+
+int Fibonacci(int n)
+{
+  if (n > 2)
+  {
+    return Fibonacci( n - 1 ) + Fibonacci( n - 2 );
+  }
+  else
+  {
+    return 1; 
+  } 
+}
+
+double FibTest(int n)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime;
+  int intResult;
+	
+	startTime = clock();
+	intResult = Fibonacci( n );
+	stopTime = clock();
+
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout << setiosflags( ios::fixed )
+       << setprecision( 0 );
+  cout  << "Fibonacci elapsed time: "
+        << elapsedTime
+        << " ms with n of "
+        << n
+        << endl;
+  cout  << " intResult: "
+        << intResult
+        << endl;
+
+  return elapsedTime;
+}
+
+double intArithmetic(int intMax)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime = clock();
+
+	int intResult = 1;
+	int i = 1;
+	while (i < intMax)
+	{
+		intResult -= i++;
+		intResult += i++;
+		intResult *= i++;
+		intResult /= i++;
+	}
+
+	stopTime = clock();
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout << setiosflags( ios::fixed )
+       << setprecision( 0 );
+  cout  << "Integer arithmetic elapsed time: "
+        << elapsedTime
+        << " ms with int Max of "
+        << intMax
+        << endl;
+  cout  << " i: "
+        << i
+        << endl;
+  cout  << " intResult: "
+        << intResult
+        << endl;
+
+  return elapsedTime;
+}
+
+
+double doubleArithmetic(double doubleMin, double doubleMax)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime = clock();
+
+	double doubleResult = doubleMin;
+	double i = doubleMin;
+	while (i < doubleMax)
+	{
+		doubleResult -= i++;
+		doubleResult += i++;
+		doubleResult *= i++;
+		doubleResult /= i++;
+	}
+
+	stopTime = clock();
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout  << "Double-precision floating point arithmetic elapsed time: "
+        << elapsedTime
+        << " ms with doubleMin "
+        << setiosflags( ios::fixed )
+        << setprecision( 6 )
+        << doubleMin
+        << ", doubleMax "
+        << doubleMax
+        << endl;
+  cout  << " i: "
+        << i
+        << endl;
+  cout  << " doubleResult: "
+        << doubleResult
+        << endl;
+        
+	return elapsedTime;
+}
+
+
+/*
+double longArithmetic(long long longMin, long long longMax)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime = clock();
+
+	long long longResult = longMin;
+	long long i = longMin;
+	while (i < longMax)
+	{
+		longResult -= i++;
+		longResult += i++;
+		longResult *= i++;
+		longResult /= i++;
+	}
+
+	stopTime = clock();
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+	printf("Long arithmetic elapsed time: %1.0f ms with longMax %I64d\n", elapsedTime, longMax);
+	printf(" i: %I64d\n", i);
+	printf(" longResult: %I64d\n", longResult);
+	return elapsedTime;
+}
+*/
+
+double trig(double trigMax)
+{
+	double elapsedTime;
+	clock_t stopTime;
+	clock_t startTime = clock();
+
+	double sine       = 0;
+	double cosine     = 0;
+	double tangent    = 0;
+	double logarithm  = 0;
+	double squareRoot = 0;
+
+	double i = 0.0;
+	while (i < trigMax)
+	{
+		sine = sin(i);
+		cosine = cos(i);
+		tangent = tan(i);
+		logarithm = log10(i);
+		squareRoot = sqrt(i);
+		i++;
+	}
+	stopTime = clock();
+	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout << setiosflags( ios::fixed )
+       << setprecision( 0 );
+  cout  << "Transcendental function floating point arithmetic elapsed time: "
+        << elapsedTime
+        << " ms with max of "
+        << trigMax
+        << endl;
+  cout << setiosflags( ios::fixed )
+       << setprecision( 6 );
+  cout  << " i: "
+        << i
+        << endl;
+  cout  << " sine: "
+        << sine
+        << endl;
+  cout  << " cosine: "
+        << cosine
+        << endl;
+  cout  << " tangent: "
+        << tangent
+        << endl;
+  cout  << " logarithm: "
+        << logarithm
+        << endl;
+  cout  << " squareRoot: "
+        << squareRoot
+        << endl;
+  
+	return elapsedTime;
+}
+
+
+double io(int ioMax)
+{
+	double elapsedTime;
+	clock_t stopTime;
+
+  clock_t startTime = clock();
+	FILE *stream;
+	stream = fopen("DeleteMe_minibench.txt", "w");
+	int i = 0;
+	while (i++ < ioMax)
+	{
+		fputs("abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefgh\n", stream);
+	}
+	fclose(stream);
+
+	char readLine[100];
+	stream = fopen("DeleteMe_minibench.txt", "r");
+	i = 0;
+	while (i++ < ioMax)
+	{
+		fgets(readLine, 100, stream);
+	}
+	fclose(stream);
+	stopTime = clock();
+
+ 	elapsedTime = (stopTime - startTime) / (CLOCKS_PER_SEC / (double) 1000.0);
+
+  cout  << setiosflags( ios::fixed )
+        << setprecision( 0 );
+  cout  << "I/O elapsed time: "
+        << elapsedTime
+        << " ms with max of "
+        << ioMax
+        << endl;
+  cout  << " i:"
+        << i
+        << endl;
+  cout  << " readLine: "
+        << readLine
+        << endl;
+              
+	return elapsedTime;
+}
+
