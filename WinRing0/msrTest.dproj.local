@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2008-10-30 16:01:05.890.pas,C:\Users\vsmith\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\vsmith\Documents\code\delphi2009\msrTest\uMsrTest.pas</Transaction>
+    <Transaction>2008-10-30 16:01:05.900.dfm,C:\Users\vsmith\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\vsmith\Documents\code\delphi2009\msrTest\uMsrTest.dfm</Transaction>
+    <Transaction>2008-10-30 16:01:16.064.dproj,C:\Users\vsmith\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\vsmith\Documents\code\delphi2009\msrTest\msrTest.dproj</Transaction>
+    <Transaction>2008-10-30 17:15:10.156.pas,C:\Users\vsmith\Documents\code\delphi2009\msr\uMsr.pas=</Transaction>
+    <Transaction>2008-10-30 18:13:23.527.pas,C:\Users\vsmith\Documents\code\delphi2009\msrTest\Unit1.pas=C:\Users\vsmith\Documents\code\delphi2009\msrTest\uOls.pas</Transaction>
+    <Transaction>2008-11-07 16:28:13.839.pas,C:\Users\vsmith\Documents\code\delphi2009\msrTest\uOls.pas=C:\Users\vsmith\Documents\code\delphi2009\msrTest\uWinRing0.pas</Transaction>
+  </Transactions>
+</BorlandProject>

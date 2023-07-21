@@ -1,0 +1,20 @@
+* CPU Name: Mobile AMD Athlon(tm) 64 Processor 3200+
+* Vendor ID: AuthenticAMD
+* Core ID: Family: 15, Model: 4, Stepping: 10
+* Number of CPUs (real, virtual): 1, 1
+* Windows MHz: 2004
+* COSBI CPU Clock speed is 2,004,550,511 Hz
+* CPU External Clock: -1 MHz
+* Motherboard: eMachine, Model Shadow-K8
+* BIOS: PhoenixBIOS 4.0 Release 6.0, Name: PhoenixBIOS 4.0 Release 6.0, Version: Arima  - 6040000
+* Graphics adapter: ATI MOBILITY RADEON 9600/9700 Series (Omega 2.5.58)
+* Graphics adapter memory: 64 MB
+* Graphics driver: 6.14.10.6458
+* Memory Amount (MB): 510
+* Hard drive model: IC25N080ATMR04-0, Size: 80.0 GB
+* Screen Resolution: 1280x1024x32@60Hz
+* OS Name: Microsoft Windows XP
+* Version: 5.1
+* Build: 2600
+* Registered Owner: vsmith
+* Registered Organization: 

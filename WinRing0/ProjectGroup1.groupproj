@@ -1,0 +1,60 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{19406475-5973-42F6-AAC7-D8FE1ECD7A6D}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="msrTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\disableCacheLock\disableCacheLock.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\enableCacheLock\enableCacheLock.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="msrTest">
+			<MSBuild Projects="msrTest.dproj"/>
+		</Target>
+		<Target Name="msrTest:Clean">
+			<MSBuild Targets="Clean" Projects="msrTest.dproj"/>
+		</Target>
+		<Target Name="msrTest:Make">
+			<MSBuild Targets="Make" Projects="msrTest.dproj"/>
+		</Target>
+		<Target Name="disableCacheLock">
+			<MSBuild Projects="..\disableCacheLock\disableCacheLock.dproj"/>
+		</Target>
+		<Target Name="disableCacheLock:Clean">
+			<MSBuild Targets="Clean" Projects="..\disableCacheLock\disableCacheLock.dproj"/>
+		</Target>
+		<Target Name="disableCacheLock:Make">
+			<MSBuild Targets="Make" Projects="..\disableCacheLock\disableCacheLock.dproj"/>
+		</Target>
+		<Target Name="enableCacheLock">
+			<MSBuild Projects="..\enableCacheLock\enableCacheLock.dproj"/>
+		</Target>
+		<Target Name="enableCacheLock:Clean">
+			<MSBuild Targets="Clean" Projects="..\enableCacheLock\enableCacheLock.dproj"/>
+		</Target>
+		<Target Name="enableCacheLock:Make">
+			<MSBuild Targets="Make" Projects="..\enableCacheLock\enableCacheLock.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="msrTest;disableCacheLock;enableCacheLock"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="msrTest:Clean;disableCacheLock:Clean;enableCacheLock:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="msrTest:Make;disableCacheLock:Make;enableCacheLock:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
