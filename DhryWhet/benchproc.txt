@@ -1,0 +1,62 @@
+  procedure ViewDhrystoneBenchmark;
+  begin
+    writeln (#13#10,'Dhrystone Benchmark, based on Version 2.1 - Pascal Language');
+    write (' -> Please give the number of runs through the benchmark [in thausands]: ');
+    readln (Dhrystone_NumberOfRuns);
+    Dhrystone_NumberOfRuns := Dhrystone_NumberOfRuns * 1000;
+
+    if verbose then
+      writeln (' -> Execution starts, ', Dhrystone_NumberOfRuns : 7, ' runs through Dhrystone');
+
+    DhrystoneResult := Dhrystone(Dhrystone_NumberOfRuns, Dhrystone_TimeElapsedForEachCycle);
+    if DhrystoneResult > -1 then
+    begin
+      if verbose then
+      begin
+        write (' -> Microseconds for one run through Dhrystone: ');
+        writeln (Dhrystone_TimeElapsedForEachCycle : 12 : 8);
+      end;
+      write (' ==> Dhrystone score: ');
+      writeln (DhrystoneResult : 17:4, '    [', (DhrystoneResult / 1000000) :11:4, '] MIPS');
+    end
+    else
+    begin
+      writeln (' *** Measured time too small to obtain meaningful results.');
+      writeln (' *** Please increase number of runs !');
+    end;
+
+    write(#13#10, ' ---- End ----');
+    readln;
+  end;
+
+  procedure ViewWhetstoneBenchmark;
+  begin
+    writeln (#13#10,'Whetstone Benchmark - Pascal Language');
+    write (' -> Please give the number of runs through the benchmark: ');
+    readln (Whetstone_NumberOfRuns);
+    Whetstone_NumberOfRuns := Whetstone_NumberOfRuns;
+
+    if verbose then
+      writeln (' -> Execution starts, ', Whetstone_NumberOfRuns : 11, ' runs through Whetstone');
+
+    WhetstoneResult := Whetstone(Whetstone_NumberOfRuns, Whetstone_TimeElapsedForEachCycle);
+    if WhetstoneResult > -1 then
+    begin
+      if verbose then
+      begin
+        write (' -> Microseconds for one run through Whetstone: ');
+        writeln (Whetstone_TimeElapsedForEachCycle : 12 : 8);
+      end;
+      write (' ==> Whetstone score: ');
+      writeln (WhetstoneResult : 17:4, '    [', (WhetstoneResult / 1000000):11:4, '] MWIPS');
+    end
+    else
+    begin
+      writeln (' *** Measured time too small to obtain meaningful results.');
+      writeln (' *** Please increase number of runs !');
+    end;
+
+    write(#13#10, ' ---- End ----');
+    readln;
+  end;
+

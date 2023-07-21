@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2006/01/30 15:45:10.963.pas,C:\data\distribute\cosbi\CPUSpeed\Unit1.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuClockSpeed.pas</Transaction>
+    <Transaction>2006/02/02 14:58:31.213.pas,C:\data\distribute\cosbi\CPUSpeed\Unit1.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedSettings.pas</Transaction>
+    <Transaction>2006/02/02 14:58:31.229.dfm,C:\data\distribute\cosbi\CPUSpeed\Unit1.dfm=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedSettings.dfm</Transaction>
+    <Transaction>2006/02/02 15:06:50.135.pas,C:\data\distribute\cosbi\CPUSpeed\Unit2.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedMsr.pas</Transaction>
+    <Transaction>2006/02/02 15:06:50.135.dfm,C:\data\distribute\cosbi\CPUSpeed\Unit2.dfm=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedMsr.dfm</Transaction>
+    <Transaction>2006/02/02 19:51:13.557.pas,C:\data\distribute\cosbi\CPUSpeed\Unit2.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedManual.pas</Transaction>
+    <Transaction>2006/02/02 19:51:13.557.dfm,C:\data\distribute\cosbi\CPUSpeed\Unit2.dfm=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedManual.dfm</Transaction>
+    <Transaction>2006/02/06 10:59:56.762.pas,C:\data\distribute\cosbi\CPUSpeed\Unit2.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedLog.pas</Transaction>
+    <Transaction>2006/02/06 10:59:56.762.dfm,C:\data\distribute\cosbi\CPUSpeed\Unit2.dfm=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedLog.dfm</Transaction>
+    <Transaction>2006/02/07 16:08:54.859.pas,C:\data\distribute\cosbi\CPUSpeed\Unit2.pas=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedChangeCpuRatio.pas</Transaction>
+    <Transaction>2006/02/07 16:08:54.875.dfm,C:\data\distribute\cosbi\CPUSpeed\Unit2.dfm=C:\data\distribute\cosbi\CPUSpeed\uCpuSpeedChangeCpuRatio.dfm</Transaction>
+    <Transaction>2006/03/14 16:03:53.973.pas,C:\data\distribute\cosbi\CPUSpeed\Unit1.pas=C:\data\distribute\cosbi\COSBI\uStopWatch.pas</Transaction>
+  </Transactions>
+</BorlandProject>
